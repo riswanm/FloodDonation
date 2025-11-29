@@ -68,23 +68,30 @@ const affectedAreas = [
 
 const reliefWork = [
   {
+    id: 2,
+    title: "Preparing food for the lunch",
+    imageUrl: "assets/images/support/foodmaking.jpeg",
+    date: "November 28, 2025"
+  },
+  {
+    id: 3,
+    title: "Food pack to be Distributed for Dinner",
+    imageUrl: "assets/images/support/foodpack.jpeg",
+    date: "November 28, 2025"
+  },
+  {
+    id: 4,
+    title: "Distributing food pack in a Boat",
+    imageUrl: "assets/images/support/DistributingFood.jpeg",
+    date: "November 29, 2025"
+  },
+   {
     id: 1,
     title: "Prapring a boat fro resue and support operation",
     imageUrl: "assets/images/support/boat.jpeg",
     date: "November 29, 2025"
   },
-  {
-    id: 2,
-    title: "Preparing food for the lunch",
-    imageUrl: "assets/images/support/foodmaking.jpeg",
-    date: "November 29, 2025"
-  },
-  {
-    id: 3,
-    title: "Distributing food pack in a Boat",
-    imageUrl: "assets/images/support/DistributingFood.jpeg",
-    date: "November 28, 2025"
-  }
+ 
 ];
 
 const fundUsage = [
