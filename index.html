@@ -16,10 +16,12 @@
                     <h1 class="header-title">Sri Lanka Flood Relief 2025</h1>
                     <p class="header-subtitle">Organized by Jawhariyya Mosque Thalduwa Avissawella</p>
                     <p class="header-location">Thalduwa, Avissawella, Sri Lanka</p>
+              
                 </div>
                 <button class="btn-header-cta" id="headerDonateBtn">
                     <span class="btn-text">Donate Now</span>
                     <span class="btn-icon">❤️</span>
+        
                 </button>
             </div>
         </div>
@@ -32,6 +34,10 @@
                 <h2 class="impact-title">Your Support Changes Lives</h2>
                 <p class="impact-hero-text">Your compassion has the power to transform lives. Together, we can bring hope, restore homes, and rebuild dreams for families devastated by the floods.</p>
                 <p class="impact-description" id="floodDescription"></p>
+                <div class="quick-links">
+                    <a href="#contact-details" class="quick-link">📋 Account Details</a>
+                    <a href="#contact-details" class="quick-link">📞 Contact Us</a>
+                </div>
             </div>
         </div>
     </section>
@@ -76,7 +82,7 @@
     </section>
 
     <!-- Contact & Account Details Section -->
-    <section class="contact-details">
+    <section class="contact-details" id="contact-details">
         <div class="container">
             <h2 class="section-title">Bank Account Details</h2>
             <div class="account-info">
@@ -120,8 +126,17 @@
             <h2 class="modal-title">Make Your Donation</h2>
             
             <div class="modal-account-info">
-                <p class="modal-account-label">Bank Account:</p>
-                <p class="modal-account-number" id="modalAccountNumber"></p>
+                <p class="modal-account-label">Transfer to Bank Account:</p>
+                <div class="modal-account-details">
+                    <div class="modal-account-item">
+                        <span class="modal-item-label">Account Number:</span>
+                        <span class="modal-account-number" id="modalAccountNumber"></span>
+                    </div>
+                    <div class="modal-account-item">
+                        <span class="modal-item-label">Account Name:</span>
+                        <span class="modal-account-name" id="modalAccountName"></span>
+                    </div>
+                </div>
                 <p class="modal-bank-name" id="modalBankName"></p>
                 <p class="modal-instructions">Please transfer the amount to the above account. If you cannot transfer now, we will contact you to collect your donation.</p>
             </div>

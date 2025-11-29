@@ -94,7 +94,6 @@ function renderAffectedAreas() {
                 <img src="${area.imageUrl}" alt="${area.title}" class="card-image" data-image-url="${area.imageUrl}">
                 <div class="card-content">
                     <h3 class="card-title">${area.title}</h3>
-                    <p class="card-description">${area.description}</p>
                 </div>
             </div>
         `).join('');
@@ -118,10 +117,8 @@ function renderReliefWork() {
                 <img src="${work.imageUrl}" alt="${work.title}" class="card-image" data-image-url="${work.imageUrl}">
                 <div class="card-content">
                     <h3 class="card-title">${work.title}</h3>
-                    <p class="card-description">${work.description}</p>
                     <div class="card-meta">
                         <span class="card-date">${work.date}</span>
-                        <span class="card-time">${work.time}</span>
                     </div>
                 </div>
             </div>
@@ -201,6 +198,7 @@ function openDonationModal(amount = '') {
     const modal = document.getElementById('donationModal');
     const amountInput = document.getElementById('donationAmount');
     const modalAccountNumber = document.getElementById('modalAccountNumber');
+    const modalAccountName = document.getElementById('modalAccountName');
     const modalBankName = document.getElementById('modalBankName');
     
     if (modal) {
@@ -210,6 +208,9 @@ function openDonationModal(amount = '') {
         // Set account details in modal
         if (modalAccountNumber) {
             modalAccountNumber.textContent = siteConfig.bankAccount.accountNumber;
+        }
+        if (modalAccountName) {
+            modalAccountName.textContent = siteConfig.bankAccount.accountName;
         }
         if (modalBankName) {
             modalBankName.textContent = `${siteConfig.bankAccount.bankName} - ${siteConfig.bankAccount.branch}`;

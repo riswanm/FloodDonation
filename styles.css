@@ -126,8 +126,37 @@ body {
     line-height: 1.3;
 }
 
+.quick-links {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.quick-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    padding: 10px 20px;
+    background: var(--accent-color);
+    color: var(--bg-white);
+    text-decoration: none;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: var(--shadow-sm);
+}
+
+.quick-link:hover {
+    background: #d35400;
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-md);
+}
+
 .impact-hero-text {
-    font-size: 20px;
+    font-size: 16px;
     color: var(--accent-color);
     font-weight: 600;
     margin-bottom: 20px;
@@ -136,7 +165,7 @@ body {
 }
 
 .impact-description {
-    font-size: 18px;
+    font-size: 15px;
     color: var(--text-dark);
     margin-bottom: 0;
     line-height: 1.7;
@@ -388,14 +417,14 @@ section {
 }
 
 .card-title {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 700;
     color: var(--primary-color);
     margin-bottom: 10px;
 }
 
 .card-description {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-dark);
     line-height: 1.6;
     margin-bottom: 12px;
@@ -620,14 +649,41 @@ section {
 .modal-account-label {
     font-size: 13px;
     color: var(--text-light);
-    margin-bottom: 6px;
+    margin-bottom: 10px;
+    text-align: center;
+}
+
+.modal-account-details {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 8px;
+}
+
+.modal-account-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+
+.modal-item-label {
+    font-size: 11px;
+    color: var(--text-light);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
 .modal-account-number {
     font-size: 20px;
     font-weight: 700;
     color: var(--accent-color);
-    margin-bottom: 4px;
+}
+
+.modal-account-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--primary-color);
 }
 
 .modal-bank-name {
