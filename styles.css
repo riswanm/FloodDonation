@@ -101,6 +101,27 @@ body {
     font-size: 22px;
 }
 
+/* Drone Footage Section */
+.drone-footage {
+    background: var(--bg-white);
+    padding: 60px 0;
+}
+
+.video-container {
+    max-width: 900px;
+    margin: 0 auto;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--shadow-lg);
+}
+
+.drone-video {
+    width: 100%;
+    height: auto;
+    display: block;
+    background: #000;
+}
+
 /* Hero/Impact Section */
 .hero {
     background: linear-gradient(to bottom, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.95)), 
