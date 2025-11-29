@@ -29,6 +29,11 @@ const siteConfig = {
   },
   googleSheets: {
     scriptUrl: "https://script.google.com/macros/s/AKfycbwORZF9BIYLbWgnL2Yr-Zstnh018P_K13kYKWnHZddD2DqlR4ozs5SJHeRA7HawZmxW/exec" // Replace with your deployed script URL
+  },
+  spamProtection: {
+    enabled: true,
+    cooldownSeconds: 60, // Time in seconds before allowing another submission from same device
+    maxSubmissionsPerSession: 5 // Maximum number of submissions allowed per session (configurable)
   }
 };
 

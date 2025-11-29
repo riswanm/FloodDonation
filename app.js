@@ -1,5 +1,9 @@
 // Main Application Logic for Sri Lanka Flood Relief Website
 
+// Spam protection tracking
+let lastSubmissionTime = 0;
+let submissionCount = 0;
+
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
     initializeApp();
@@ -241,6 +245,29 @@ function closeDonationModal() {
 // Handle donation form submission
 function handleDonationSubmit(event) {
     event.preventDefault();
+    
+    // Spam protection check
+    if (siteConfig.spamProtection.enabled) {
+        const currentTime = Date.now();
+        const timeSinceLastSubmission = (currentTime - lastSubmissionTime) / 1000; // in seconds
+        
+        // Check cooldown period
+        if (timeSinceLastSubmission < siteConfig.spamProtection.cooldownSeconds) {
+            const remainingSeconds = Math.ceil(siteConfig.spamProtection.cooldownSeconds - timeSinceLastSubmission);
+            alert(`Please wait ${remainingSeconds} seconds before submitting another donation.`);
+            return;
+        }
+        
+        // Check max submissions per session
+        if (submissionCount >= siteConfig.spamProtection.maxSubmissionsPerSession) {
+            alert(`Maximum number of submissions (${siteConfig.spamProtection.maxSubmissionsPerSession}) reached. Please refresh the page if you need to submit more donations.`);
+            return;
+        }
+        
+        // Update tracking
+        lastSubmissionTime = currentTime;
+        submissionCount++;
+    }
     
     // Get form values
     const name = document.getElementById('donorName').value;
