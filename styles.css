@@ -563,8 +563,8 @@ section {
     position: relative;
     background: var(--bg-white);
     max-width: 500px;
-    margin: 50px auto;
-    padding: 40px 30px;
+    margin: 30px auto;
+    padding: 30px 25px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-lg);
     z-index: 1001;
@@ -574,17 +574,17 @@ section {
 
 .modal-close {
     position: absolute;
-    top: 15px;
-    right: 15px;
+    top: 10px;
+    right: 10px;
     background: none;
     border: none;
-    font-size: 36px;
+    font-size: 30px;
     color: var(--text-light);
     cursor: pointer;
     line-height: 1;
     padding: 0;
-    width: 40px;
-    height: 40px;
+    width: 36px;
+    height: 36px;
     transition: var(--transition);
 }
 
@@ -594,52 +594,53 @@ section {
 }
 
 .modal-title {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 700;
     color: var(--primary-color);
-    margin-bottom: 25px;
+    margin-bottom: 20px;
     text-align: center;
+    padding-right: 30px;
 }
 
 .modal-account-info {
     background: var(--bg-light);
-    padding: 20px;
+    padding: 15px;
     border-radius: 8px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
     text-align: center;
 }
 
 .modal-account-label {
-    font-size: 14px;
+    font-size: 13px;
     color: var(--text-light);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .modal-account-number {
-    font-size: 24px;
+    font-size: 20px;
     font-weight: 700;
     color: var(--accent-color);
-    margin-bottom: 5px;
+    margin-bottom: 4px;
 }
 
 .modal-bank-name {
-    font-size: 16px;
+    font-size: 14px;
     color: var(--text-dark);
 }
 
 .modal-instructions {
-    font-size: 15px;
+    font-size: 13px;
     color: var(--text-dark);
-    margin-top: 15px;
-    padding-top: 15px;
+    margin-top: 12px;
+    padding-top: 12px;
     border-top: 1px solid var(--border-color);
-    line-height: 1.6;
+    line-height: 1.5;
 }
 
 .donation-form {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 16px;
 }
 
 .form-group {
@@ -648,19 +649,19 @@ section {
 }
 
 .form-label {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
     color: var(--text-dark);
-    margin-bottom: 8px;
+    margin-bottom: 6px;
 }
 
 .form-input {
-    padding: 14px 16px;
-    font-size: 16px;
+    padding: 12px 14px;
+    font-size: 15px;
     border: 2px solid var(--border-color);
     border-radius: 8px;
     transition: var(--transition);
-    min-height: 50px;
+    min-height: 46px;
 }
 
 .form-input:focus {
@@ -670,8 +671,8 @@ section {
 }
 
 .btn-submit {
-    padding: 16px 30px;
-    font-size: 18px;
+    padding: 14px 30px;
+    font-size: 17px;
     font-weight: 700;
     color: var(--bg-white);
     background: var(--primary-color);
@@ -679,8 +680,8 @@ section {
     border-radius: 8px;
     cursor: pointer;
     transition: var(--transition);
-    margin-top: 10px;
-    min-height: 56px;
+    margin-top: 6px;
+    min-height: 52px;
 }
 
 .btn-submit:hover {
@@ -897,6 +898,42 @@ section {
     .modal-content {
         margin: 20px;
         padding: 30px 20px;
+    }
+
+    .modal-content {
+        margin: 10px;
+        padding: 20px 16px;
+        max-height: 95vh;
+    }
+
+    .modal-title {
+        font-size: 20px;
+        margin-bottom: 16px;
+    }
+
+    .modal-account-info {
+        padding: 12px;
+        margin-bottom: 16px;
+    }
+
+    .modal-account-number {
+        font-size: 18px;
+    }
+
+    .donation-form {
+        gap: 14px;
+    }
+
+    .form-input {
+        padding: 10px 12px;
+        font-size: 14px;
+        min-height: 44px;
+    }
+
+    .btn-submit {
+        padding: 12px 24px;
+        font-size: 16px;
+        min-height: 48px;
     }
 
     .thank-you-content {
