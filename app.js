@@ -247,13 +247,21 @@ function handleDonationSubmit(event) {
     const phone = document.getElementById('donorPhone').value;
     const amount = document.getElementById('donationAmount').value;
     
-    // Log donation to console
-    console.log('Donation Submission:', {
+    // Create donation data object
+    const donationData = {
         name: name,
         phone: phone,
-        amount: `LKR ${amount}`,
-        timestamp: new Date().toISOString()
-    });
+        amount: amount,
+        timestamp: new Date().toISOString(),
+        date: new Date().toLocaleDateString('en-US'),
+        time: new Date().toLocaleTimeString('en-US')
+    };
+    
+    // Log donation to console
+    console.log('Donation Submission:', donationData);
+    
+    // Save to Google Sheets
+    saveToGoogleSheets(donationData);
     
     // Close donation modal
     closeDonationModal();
@@ -316,6 +324,33 @@ function closeImageModal() {
         imageModal.classList.remove('active');
         document.body.style.overflow = '';
     }
+}
+
+// Save donation data to Google Sheets
+function saveToGoogleSheets(donationData) {
+    const scriptUrl = siteConfig.googleSheets?.scriptUrl;
+    
+    // Check if script URL is configured
+    if (!scriptUrl || scriptUrl === 'YOUR_GOOGLE_APPS_SCRIPT_URL_HERE') {
+        console.warn('Google Sheets integration not configured. Please set up the script URL in data.js');
+        return;
+    }
+    
+    // Send data to Google Apps Script
+    fetch(scriptUrl, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(donationData)
+    })
+    .then(() => {
+        console.log('Donation data sent to Google Sheets successfully');
+    })
+    .catch((error) => {
+        console.error('Error saving to Google Sheets:', error);
+    });
 }
 
 // Utility function to format numbers with commas
