@@ -91,13 +91,21 @@ function renderAffectedAreas() {
     if (grid) {
         grid.innerHTML = affectedAreas.map(area => `
             <div class="card">
-                <img src="${area.imageUrl}" alt="${area.title}" class="card-image">
+                <img src="${area.imageUrl}" alt="${area.title}" class="card-image" data-image-url="${area.imageUrl}">
                 <div class="card-content">
                     <h3 class="card-title">${area.title}</h3>
                     <p class="card-description">${area.description}</p>
                 </div>
             </div>
         `).join('');
+        
+        // Add click listeners to images
+        const images = grid.querySelectorAll('.card-image');
+        images.forEach(img => {
+            img.addEventListener('click', function() {
+                openImageModal(this.getAttribute('data-image-url'));
+            });
+        });
     }
 }
 
@@ -107,7 +115,7 @@ function renderReliefWork() {
     if (grid) {
         grid.innerHTML = reliefWork.map(work => `
             <div class="card">
-                <img src="${work.imageUrl}" alt="${work.title}" class="card-image">
+                <img src="${work.imageUrl}" alt="${work.title}" class="card-image" data-image-url="${work.imageUrl}">
                 <div class="card-content">
                     <h3 class="card-title">${work.title}</h3>
                     <p class="card-description">${work.description}</p>
@@ -118,6 +126,14 @@ function renderReliefWork() {
                 </div>
             </div>
         `).join('');
+        
+        // Add click listeners to images
+        const images = grid.querySelectorAll('.card-image');
+        images.forEach(img => {
+            img.addEventListener('click', function() {
+                openImageModal(this.getAttribute('data-image-url'));
+            });
+        });
     }
 }
 
@@ -161,6 +177,22 @@ function setupEventListeners() {
     const thankYouCloseBtn = document.getElementById('thankYouCloseBtn');
     if (thankYouCloseBtn) {
         thankYouCloseBtn.addEventListener('click', closeThankYouMessage);
+    }
+    
+    // Image modal close button
+    const imageModalClose = document.getElementById('imageModalClose');
+    if (imageModalClose) {
+        imageModalClose.addEventListener('click', closeImageModal);
+    }
+    
+    // Image modal overlay click to close
+    const imageModal = document.getElementById('imageModal');
+    if (imageModal) {
+        imageModal.addEventListener('click', function(e) {
+            if (e.target === imageModal) {
+                closeImageModal();
+            }
+        });
     }
 }
 
@@ -260,6 +292,27 @@ function closeThankYouMessage() {
     const thankYouModal = document.getElementById('thankYouModal');
     if (thankYouModal) {
         thankYouModal.classList.remove('active');
+        document.body.style.overflow = '';
+    }
+}
+
+// Open image modal with full-size image
+function openImageModal(imageUrl) {
+    const imageModal = document.getElementById('imageModal');
+    const imageModalImg = document.getElementById('imageModalImg');
+    
+    if (imageModal && imageModalImg) {
+        imageModalImg.src = imageUrl;
+        imageModal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+    }
+}
+
+// Close image modal
+function closeImageModal() {
+    const imageModal = document.getElementById('imageModal');
+    if (imageModal) {
+        imageModal.classList.remove('active');
         document.body.style.overflow = '';
     }
 }
