@@ -513,6 +513,7 @@ section {
     gap: 20px;
     max-width: 900px;
     margin: 0 auto;
+    justify-items: center;
 }
 
 .contact-card {
@@ -521,6 +522,9 @@ section {
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
     transition: var(--transition);
+    text-align: center;
+    width: 100%;
+    max-width: 400px;
 }
 
 .contact-card:hover {
