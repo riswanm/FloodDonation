@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Support Sri Lanka Flood Relief 2025 - Help families affected by the major floods in Avissawella through Jawhariyya Mosque Thalduwa">
+    <title>Sri Lanka Flood Relief 2025 | Jawhariyya Mosque Thalduwa</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header">
+        <div class="container">
+            <div class="header-content">
+                <div class="header-text">
+                    <h1 class="header-title">Sri Lanka Flood Relief 2025</h1>
+                    <p class="header-subtitle">Organized by Jawhariyya Mosque Thalduwa Avissawella</p>
+                    <p class="header-location">Thalduwa, Avissawella, Sri Lanka</p>
+                </div>
+                <button class="btn-header-cta" id="headerDonateBtn">
+                    <span class="btn-text">Donate Now</span>
+                    <span class="btn-icon">❤️</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero/Impact Section -->
+    <section class="hero">
+        <div class="container">
+            <div class="impact-banner">
+                <h2 class="impact-title">Your Support Changes Lives</h2>
+                <p class="impact-hero-text">Your compassion has the power to transform lives. Together, we can bring hope, restore homes, and rebuild dreams for families devastated by the floods.</p>
+                <p class="impact-description" id="floodDescription"></p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fund Usage Section -->
+    <section class="fund-usage">
+        <div class="container">
+            <h2 class="section-title">How Your Donation Helps</h2>
+            <ul class="usage-list" id="fundUsageList"></ul>
+        </div>
+    </section>
+
+    <!-- Donation Tiers Section -->
+    <section class="donation-tiers">
+        <div class="container">
+            <h2 class="section-title">Quick Donation</h2>
+            <p class="section-subtitle">Choose an amount to get started</p>
+            <div class="tiers-grid" id="tiersGrid"></div>
+            <button class="btn-cta" id="customDonateBtn">
+                <span class="btn-text">Give Your Support</span>
+                <span class="btn-icon">❤️</span>
+            </button>
+        </div>
+    </section>
+
+    <!-- Affected Areas Section -->
+    <section class="affected-areas">
+        <div class="container">
+            <h2 class="section-title">Areas Affected by Floods</h2>
+            <p class="section-subtitle">Witness the devastation across our communities</p>
+            <div class="cards-grid" id="affectedAreasGrid"></div>
+        </div>
+    </section>
+
+    <!-- Relief Work Section -->
+    <section class="relief-work">
+        <div class="container">
+            <h2 class="section-title">Our Relief Efforts</h2>
+            <p class="section-subtitle">See how your support is making a difference</p>
+            <div class="cards-grid" id="reliefWorkGrid"></div>
+        </div>
+    </section>
+
+    <!-- Contact & Account Details Section -->
+    <section class="contact-details">
+        <div class="container">
+            <h2 class="section-title">Bank Account Details</h2>
+            <div class="account-info">
+                <div class="account-item">
+                    <span class="account-label">Bank:</span>
+                    <span class="account-value" id="bankName"></span>
+                </div>
+                <div class="account-item">
+                    <span class="account-label">Account Number:</span>
+                    <span class="account-value highlight" id="accountNumber"></span>
+                </div>
+                <div class="account-item">
+                    <span class="account-label">Account Name:</span>
+                    <span class="account-value" id="accountName"></span>
+                </div>
+                <div class="account-item">
+                    <span class="account-label">Branch:</span>
+                    <span class="account-value" id="branchName"></span>
+                </div>
+            </div>
+
+            <h2 class="section-title">Contact Persons</h2>
+            <div class="contacts-grid" id="contactsGrid"></div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p class="footer-text">© 2025 Jawhariyya Mosque Thalduwa Avissawella</p>
+            <p class="footer-text">All donations serve all communities regardless of religion or ethnicity</p>
+            <p class="footer-attribution">Images from Unsplash</p>
+        </div>
+    </footer>
+
+    <!-- Donation Modal -->
+    <div class="modal" id="donationModal">
+        <div class="modal-overlay" id="modalOverlay"></div>
+        <div class="modal-content">
+            <button class="modal-close" id="modalClose">&times;</button>
+            <h2 class="modal-title">Make Your Donation</h2>
+            
+            <div class="modal-account-info">
+                <p class="modal-account-label">Bank Account:</p>
+                <p class="modal-account-number" id="modalAccountNumber"></p>
+                <p class="modal-bank-name" id="modalBankName"></p>
+                <p class="modal-instructions">Please transfer the amount to the above account. If you cannot transfer now, we will contact you to collect your donation.</p>
+            </div>
+
+            <form class="donation-form" id="donationForm">
+                <div class="form-group">
+                    <label for="donorName" class="form-label">Your Name</label>
+                    <input type="text" id="donorName" class="form-input" placeholder="Enter your name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="donorPhone" class="form-label">Phone Number</label>
+                    <input type="tel" id="donorPhone" class="form-input" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="donationAmount" class="form-label">Donation Amount (LKR)</label>
+                    <input type="number" id="donationAmount" class="form-input" placeholder="Enter amount" required>
+                </div>
+
+                <button type="submit" class="btn-submit">Confirm Donation</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Thank You Modal -->
+    <div class="thank-you-modal" id="thankYouModal">
+        <div class="thank-you-overlay"></div>
+        <div class="thank-you-content">
+            <div class="thank-you-icon">🙏</div>
+            <h2 class="thank-you-title">Thank You for Your Generosity!</h2>
+            <p class="thank-you-message">May Allah bless you abundantly for your kindness and compassion towards those in need.</p>
+            <p class="thank-you-submessage">Your donation will bring hope and relief to families affected by the floods.</p>
+            <div class="thank-you-details" id="thankYouDetails"></div>
+            <button class="btn-thank-you-close" id="thankYouCloseBtn">Close</button>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="data.js"></script>
+    <script src="app.js"></script>
+</body>
+</html>
