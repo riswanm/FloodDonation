@@ -59,11 +59,11 @@ function renderContactPersons() {
     const contactsGrid = document.getElementById('contactsGrid');
     if (contactsGrid) {
         contactsGrid.innerHTML = siteConfig.contactPersons.map(person => `
-            <div class="contact-card">
+            <a href="https://wa.me/${person.phone.replace(/[^0-9]/g, '')}" class="contact-card" target="_blank">
                 <div class="contact-name">${person.name}</div>
                 <div class="contact-role">${person.role}</div>
                 <div class="contact-phone">${person.phone}</div>
-            </div>
+            </a>
         `).join('');
     }
 }

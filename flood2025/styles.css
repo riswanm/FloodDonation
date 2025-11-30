@@ -538,7 +538,7 @@ section {
 }
 
 .contact-card {
-    background: var(--bg-light);
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
     padding: 25px;
     border-radius: var(--border-radius);
     box-shadow: var(--shadow-sm);
@@ -546,29 +546,32 @@ section {
     text-align: center;
     width: 100%;
     max-width: 400px;
+    text-decoration: none;
+    display: block;
+    cursor: pointer;
 }
 
 .contact-card:hover {
-    box-shadow: var(--shadow-md);
-    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(37, 211, 102, 0.3);
+    transform: translateY(-3px);
 }
 
 .contact-name {
     font-size: 20px;
     font-weight: 700;
-    color: var(--primary-color);
+    color: white;
     margin-bottom: 5px;
 }
 
 .contact-role {
     font-size: 14px;
-    color: var(--text-light);
+    color: rgba(255, 255, 255, 0.9);
     margin-bottom: 10px;
 }
 
 .contact-phone {
     font-size: 18px;
-    color: var(--accent-color);
+    color: white;
     font-weight: 600;
 }
 
@@ -723,6 +726,56 @@ section {
     padding-top: 12px;
     border-top: 1px solid var(--border-color);
     line-height: 1.5;
+}
+
+.modal-whatsapp-notice {
+    font-size: 14px;
+    color: var(--text-dark);
+    margin-top: 16px;
+    margin-bottom: 12px;
+    line-height: 1.6;
+    text-align: center;
+}
+
+.modal-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.modal-contact-link {
+    display: flex;
+    flex-direction: column;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(37, 211, 102, 0.2);
+}
+
+.modal-contact-link:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(37, 211, 102, 0.3);
+}
+
+.modal-contact-link .contact-name {
+    font-size: 15px;
+    font-weight: 700;
+    margin-bottom: 2px;
+}
+
+.modal-contact-link .contact-role {
+    font-size: 12px;
+    opacity: 0.9;
+    margin-bottom: 4px;
+}
+
+.modal-contact-link .contact-phone {
+    font-size: 14px;
+    font-weight: 600;
 }
 
 .donation-form {
