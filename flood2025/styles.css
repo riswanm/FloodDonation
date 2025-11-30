@@ -747,10 +747,10 @@ section {
 
 .modal-contact-link {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    gap: 6px;
+    gap: 2px;
     padding: 8px 10px;
     background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);
     border-radius: 6px;
@@ -760,6 +760,7 @@ section {
     box-shadow: 0 2px 8px rgba(37, 211, 102, 0.2);
     flex: 1;
     font-size: 11px;
+    text-align: center;
 }
 
 .modal-contact-link:hover {
@@ -1212,30 +1213,31 @@ section {
         gap: 6px;
         margin-top: 6px;
         margin-bottom: 8px;
-        flex-wrap: wrap;
+        flex-direction: column;
     }
 
     .modal-contact-link {
-        padding: 6px 8px;
-        font-size: 10px;
-        flex: 1 1 45%;
+        padding: 8px 10px;
+        font-size: 11px;
+        flex: 1 1 100%;
+        width: 100%;
         min-width: 0;
     }
 
     .modal-contact-link .contact-name {
-        font-size: 10px;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        font-size: 12px;
+        white-space: normal;
+        overflow: visible;
+        text-overflow: clip;
     }
 
     .modal-contact-link .contact-role {
-        font-size: 8px;
+        font-size: 10px;
     }
 
     .modal-contact-link .contact-phone {
-        font-size: 9px;
-        white-space: nowrap;
+        font-size: 11px;
+        white-space: normal;
     }
 
     .donation-form {
