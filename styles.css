@@ -1146,144 +1146,60 @@ section {
     }
 
     .modal-content {
-        margin: 5px;
-        padding: 15px 12px;
-        max-height: 92vh;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        margin: 20px;
+        padding: 30px 20px;
+    }
+
+    .modal-content {
+        margin: 10px;
+        padding: 20px 16px;
+        max-height: 95vh;
     }
 
     .modal-title {
-        font-size: 18px;
-        margin-bottom: 12px;
-        padding-right: 25px;
+        font-size: 20px;
+        margin-bottom: 16px;
     }
 
     .modal-account-info {
-        padding: 10px;
-        margin-bottom: 12px;
-    }
-
-    .modal-account-label {
-        font-size: 11px;
-        margin-bottom: 6px;
-    }
-
-    .modal-account-details {
-        gap: 8px;
-    }
-
-    .modal-account-item {
-        gap: 4px;
-    }
-
-    .modal-item-label {
-        font-size: 11px;
+        padding: 12px;
+        margin-bottom: 16px;
     }
 
     .modal-account-number {
-        font-size: 16px;
-    }
-
-    .modal-account-name,
-    .modal-bank-name {
-        font-size: 12px;
-    }
-
-    .modal-instructions {
-        font-size: 11px;
-        margin-top: 8px;
-        padding-top: 8px;
-    }
-
-    .modal-whatsapp-notice {
-        font-size: 12px;
-        margin-top: 10px;
-        margin-bottom: 8px;
-    }
-
-    .modal-contacts {
-        gap: 8px;
-        margin-top: 8px;
-        margin-bottom: 12px;
-    }
-
-    .modal-contact-link {
-        padding: 10px 12px;
-    }
-
-    .modal-contact-link .contact-name {
-        font-size: 13px;
-    }
-
-    .modal-contact-link .contact-role {
-        font-size: 11px;
-    }
-
-    .modal-contact-link .contact-phone {
-        font-size: 12px;
+        font-size: 18px;
     }
 
     .donation-form {
-        gap: 10px;
-    }
-
-    .form-label {
-        font-size: 12px;
-        margin-bottom: 4px;
+        gap: 14px;
     }
 
     .form-input {
-        padding: 10px;
+        padding: 10px 12px;
         font-size: 14px;
-        min-height: 42px;
+        min-height: 44px;
     }
 
     .btn-submit {
-        padding: 12px 20px;
-        font-size: 15px;
-        min-height: 44px;
-        margin-top: 4px;
+        padding: 12px 24px;
+        font-size: 16px;
+        min-height: 48px;
     }
 
     .thank-you-content {
-        margin: 5px;
-        padding: 20px 15px;
-        max-height: 92vh;
-        overflow-y: auto;
-        -webkit-overflow-scrolling: touch;
+        margin: 40px 20px;
+        padding: 40px 25px;
     }
 
     .thank-you-icon {
-        font-size: 50px;
-        margin-bottom: 12px;
+        font-size: 60px;
     }
 
     .thank-you-title {
-        font-size: 22px;
-        margin-bottom: 12px;
+        font-size: 26px;
     }
 
     .thank-you-message {
-        font-size: 16px;
-        margin-bottom: 10px;
-    }
-
-    .thank-you-submessage {
-        font-size: 14px;
-        margin-bottom: 15px;
-    }
-
-    .thank-you-details {
-        padding: 12px;
-        margin-top: 12px;
-        margin-bottom: 8px;
-        font-size: 13px;
-    }
-
-    .btn-thank-you-close {
-        margin-top: 15px;
-        padding: 12px 30px;
-        font-size: 15px;
+        font-size: 18px;
     }
 }
