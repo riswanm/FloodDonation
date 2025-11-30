@@ -6,6 +6,7 @@ let submissionCount = 0;
 
 // Wait for DOM to be fully loaded
 document.addEventListener('DOMContentLoaded', function() {
+    initLanguage(); // Initialize language first
     initializeApp();
 });
 

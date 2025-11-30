@@ -27,6 +27,30 @@ body {
     color: var(--text-dark);
     background-color: var(--bg-light);
     font-size: 16px;
+    position: relative;
+}
+
+/* Language Toggle Button */
+.lang-toggle {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--bg-white);
+    background: linear-gradient(135deg, var(--primary-color) 0%, #1e4620 100%);
+    border: 2px solid var(--bg-white);
+    border-radius: 25px;
+    cursor: pointer;
+    transition: var(--transition);
+    box-shadow: var(--shadow-md);
+    z-index: 1000;
+}
+
+.lang-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-lg);
 }
 
 .container {

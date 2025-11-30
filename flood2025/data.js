@@ -48,6 +48,26 @@ const donationTiers = [
 
 const affectedAreas = [
   {
+    id: 5,
+    title: "Entrance to higly residentail area under water in the Village",
+    imageUrl: "assets/images/effect/postflood1.jpeg"
+  },
+  {
+    id: 5,
+    title: "Entrance to higly residentail area under water in the Village",
+    imageUrl: "assets/images/effect/postflood2.jpeg"
+  },
+  {
+    id: 5,
+    title: "Entrance to higly residentail area under water in the Village",
+    imageUrl: "assets/images/effect/postflood3.jpeg"
+  },
+  {
+    id: 5,
+    title: "Entrance to higly residentail area under water in the Village",
+    imageUrl: "assets/images/effect/postflood4.jpeg"
+  },
+  {
     id: 1,
     title: "Main road with Shops and Houses under water",
     imageUrl: "assets/images/effect/townwithwater.jpeg"
@@ -72,6 +92,7 @@ const affectedAreas = [
     title: "Entrance to higly residentail area under water in the Village",
     imageUrl: "assets/images/effect/townwithwater.jpeg"
   }
+  
 ];
 
 const reliefWork = [
