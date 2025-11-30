@@ -96,9 +96,6 @@ function renderAffectedAreas() {
         grid.innerHTML = affectedAreas.map(area => `
             <div class="card">
                 <img src="${area.imageUrl}" alt="${area.title}" class="card-image" data-image-url="${area.imageUrl}">
-                <div class="card-content">
-                    <h3 class="card-title">${area.title}</h3>
-                </div>
             </div>
         `).join('');
         
@@ -119,12 +116,6 @@ function renderReliefWork() {
         grid.innerHTML = reliefWork.map(work => `
             <div class="card">
                 <img src="${work.imageUrl}" alt="${work.title}" class="card-image" data-image-url="${work.imageUrl}">
-                <div class="card-content">
-                    <h3 class="card-title">${work.title}</h3>
-                    <div class="card-meta">
-                        <span class="card-date">${work.date}</span>
-                    </div>
-                </div>
             </div>
         `).join('');
         
