@@ -5,9 +5,14 @@ let lastSubmissionTime = 0;
 let submissionCount = 0;
 
 // Wait for DOM to be fully loaded
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', async function() {
     initLanguage(); // Initialize language first
+    
+    // Initialize image loader and wait for images to load
+    await imageLoader.initialize();
+    
     initializeApp();
+    setupInfiniteScroll();
 });
 
 function initializeApp() {
@@ -91,41 +96,71 @@ function renderDonationTiers() {
 }
 
 // Render affected areas cards
-function renderAffectedAreas() {
+function renderAffectedAreas(append = false) {
     const grid = document.getElementById('affectedAreasGrid');
     if (grid) {
-        grid.innerHTML = affectedAreas.map(area => `
-            <div class="card">
-                <img src="${area.imageUrl}" alt="${area.title}" class="card-image" data-image-url="${area.imageUrl}">
+        const images = append ? imageLoader.loadMoreAffectedAreas() : imageLoader.getAffectedAreasImages(0);
+        
+        const cardsHtml = images.map(area => `
+            <div class="card" data-aos="fade-up">
+                <img src="${area.thumbnailUrl}" 
+                     alt="${area.title}" 
+                     class="card-image" 
+                     data-image-url="${area.fullUrl}"
+                     loading="lazy">
             </div>
         `).join('');
         
-        // Add click listeners to images
-        const images = grid.querySelectorAll('.card-image');
-        images.forEach(img => {
-            img.addEventListener('click', function() {
-                openImageModal(this.getAttribute('data-image-url'));
-            });
+        if (append) {
+            grid.insertAdjacentHTML('beforeend', cardsHtml);
+        } else {
+            grid.innerHTML = cardsHtml;
+        }
+        
+        // Add click listeners to new images
+        const imageElements = grid.querySelectorAll('.card-image');
+        imageElements.forEach(img => {
+            if (!img.hasAttribute('data-listener')) {
+                img.setAttribute('data-listener', 'true');
+                img.addEventListener('click', function() {
+                    openImageModal(this.getAttribute('data-image-url'));
+                });
+            }
         });
     }
 }
 
 // Render relief work cards
-function renderReliefWork() {
+function renderReliefWork(append = false) {
     const grid = document.getElementById('reliefWorkGrid');
     if (grid) {
-        grid.innerHTML = reliefWork.map(work => `
-            <div class="card">
-                <img src="${work.imageUrl}" alt="${work.title}" class="card-image" data-image-url="${work.imageUrl}">
+        const images = append ? imageLoader.loadMoreReliefWork() : imageLoader.getReliefWorkImages(0);
+        
+        const cardsHtml = images.map(work => `
+            <div class="card" data-aos="fade-up">
+                <img src="${work.thumbnailUrl}" 
+                     alt="${work.title}" 
+                     class="card-image" 
+                     data-image-url="${work.fullUrl}"
+                     loading="lazy">
             </div>
         `).join('');
         
-        // Add click listeners to images
-        const images = grid.querySelectorAll('.card-image');
-        images.forEach(img => {
-            img.addEventListener('click', function() {
-                openImageModal(this.getAttribute('data-image-url'));
-            });
+        if (append) {
+            grid.insertAdjacentHTML('beforeend', cardsHtml);
+        } else {
+            grid.innerHTML = cardsHtml;
+        }
+        
+        // Add click listeners to new images
+        const imageElements = grid.querySelectorAll('.card-image');
+        imageElements.forEach(img => {
+            if (!img.hasAttribute('data-listener')) {
+                img.setAttribute('data-listener', 'true');
+                img.addEventListener('click', function() {
+                    openImageModal(this.getAttribute('data-image-url'));
+                });
+            }
         });
     }
 }
@@ -342,6 +377,61 @@ function closeImageModal() {
     if (imageModal) {
         imageModal.classList.remove('active');
         document.body.style.overflow = '';
+    }
+}
+
+// Setup infinite scroll for image galleries
+function setupInfiniteScroll() {
+    const affectedAreasGrid = document.getElementById('affectedAreasGrid');
+    const reliefWorkGrid = document.getElementById('reliefWorkGrid');
+    
+    const options = {
+        root: null,
+        rootMargin: '200px',
+        threshold: 0.1
+    };
+    
+    // Create sentinel elements at the bottom of each grid
+    if (affectedAreasGrid && imageLoader.hasMoreAffectedAreas()) {
+        const affectedSentinel = document.createElement('div');
+        affectedSentinel.className = 'scroll-sentinel';
+        affectedSentinel.id = 'affectedAreasSentinel';
+        affectedAreasGrid.parentElement.appendChild(affectedSentinel);
+        
+        const affectedObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && imageLoader.hasMoreAffectedAreas()) {
+                    renderAffectedAreas(true);
+                    if (!imageLoader.hasMoreAffectedAreas()) {
+                        affectedObserver.disconnect();
+                        affectedSentinel.remove();
+                    }
+                }
+            });
+        }, options);
+        
+        affectedObserver.observe(affectedSentinel);
+    }
+    
+    if (reliefWorkGrid && imageLoader.hasMoreReliefWork()) {
+        const reliefSentinel = document.createElement('div');
+        reliefSentinel.className = 'scroll-sentinel';
+        reliefSentinel.id = 'reliefWorkSentinel';
+        reliefWorkGrid.parentElement.appendChild(reliefSentinel);
+        
+        const reliefObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && imageLoader.hasMoreReliefWork()) {
+                    renderReliefWork(true);
+                    if (!imageLoader.hasMoreReliefWork()) {
+                        reliefObserver.disconnect();
+                        reliefSentinel.remove();
+                    }
+                }
+            });
+        }, options);
+        
+        reliefObserver.observe(reliefSentinel);
     }
 }
 

@@ -30,6 +30,14 @@ const siteConfig = {
   googleSheets: {
     scriptUrl: "https://script.google.com/macros/s/AKfycbwORZF9BIYLbWgnL2Yr-Zstnh018P_K13kYKWnHZddD2DqlR4ozs5SJHeRA7HawZmxW/exec" // Replace with your deployed script URL
   },
+  googleDrive: {
+    // Shared folder IDs from Google Drive
+    // To get folder ID: Open folder in Google Drive, look at URL: https://drive.google.com/drive/folders/FOLDER_ID_HERE
+    // Make sure folders are set to "Anyone with the link can view"
+    affectedAreasFolderId: "1icxNiiJj7LsnG_-t9OVynb3v6YP8s278", // Add your affected areas folder ID here
+    reliefWorkFolderId: "15KLi5KYnDTBVKfnO55UKAggTItcpAQkw", // Add your relief work folder ID here
+    apiKey: "AIzaSyBcNQcHzUGXmYtnS36jiMXpMErFWJfp21A" // Add your Google Drive API key here
+  },
   spamProtection: {
     enabled: true,
     cooldownSeconds: 60, // Time in seconds before allowing another submission from same device
