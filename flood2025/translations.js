@@ -1,7 +1,7 @@
 // Translations for English and Tamil
 const translations = {
   en: {
-    headerTitle: "Sri Lanka Flood Relief 2025",
+    headerTitle: "Thalduwa Flood Relief 2025",
     headerSubtitle: "Organized by Jawhariyya Mosque Thalduwa Avissawella",
     headerLocation: "Thalduwa, Avissawella, Sri Lanka",
     donateNow: "Donate Now",
@@ -41,7 +41,7 @@ const translations = {
     closeButton: "Close"
   },
   ta: {
-    headerTitle: "இலங்கை வெள்ள நிவாரணம் 2025",
+    headerTitle: "தல்துவ வெள்ள நிவாரணம் 2025",
     headerSubtitle: "ஜவ்ஹாரிய்யா பள்ளிவாசல் தல்துவ அவிசாவெல்ல ஏற்பாடு",
     headerLocation: "தல்துவ, அவிசாவெல்ல, இலங்கை",
     donateNow: "நன்கொடை வழங்கவும்",
