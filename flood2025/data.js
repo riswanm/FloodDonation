@@ -25,7 +25,7 @@ const siteConfig = {
   floodInfo: {
     date: "November 2025",
     impactPercentage: 80,
-    description: "Major flooding has devastated communities across Thalduwa and surrounding areas. Nearly 80% of families have been partially or fully affected, with many seeking shelter in public places."
+    description: "Major flooding has devastated communities across Thalduwa and surrounding areas. Nearly 90% of families have been partially or fully affected, with many seeking shelter in public places."
   },
   googleSheets: {
     scriptUrl: "https://script.google.com/macros/s/AKfycbwORZF9BIYLbWgnL2Yr-Zstnh018P_K13kYKWnHZddD2DqlR4ozs5SJHeRA7HawZmxW/exec" // Replace with your deployed script URL
