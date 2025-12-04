@@ -231,8 +231,21 @@ function processDamages(rows) {
         // Split by comma and process each damage
         const damages = row.damages.split(',');
         damages.forEach(damage => {
-            const trimmed = damage.trim();
+            let trimmed = damage.trim();
             if (trimmed) {
+                const lowerDamage = trimmed.toLowerCase();
+                
+                // Skip bags and shoes (not school-related)
+                if (lowerDamage === 'bags' || lowerDamage === 'shoes' || 
+                    lowerDamage === 'bag' || lowerDamage === 'shoe') {
+                    return;
+                }
+                
+                // Normalize school-related items to "School Items"
+                if (lowerDamage.includes('school')) {
+                    trimmed = 'School Items';
+                }
+                
                 damageMap[trimmed] = (damageMap[trimmed] || 0) + 1;
             }
         });
@@ -504,6 +517,24 @@ function createDamagesChart(damagesData) {
     const minHeight = Math.max(350, labels.length * 45);
     chartContainer.style.minHeight = `${minHeight}px`;
 
+    // Generate different colors for each bar
+    const colors = [
+        { bg: 'rgba(239, 68, 68, 0.8)', border: 'rgba(239, 68, 68, 1)', text: '#991b1b' },      // Red
+        { bg: 'rgba(245, 158, 11, 0.8)', border: 'rgba(245, 158, 11, 1)', text: '#92400e' },    // Orange
+        { bg: 'rgba(16, 185, 129, 0.8)', border: 'rgba(16, 185, 129, 1)', text: '#065f46' },    // Green
+        { bg: 'rgba(59, 130, 246, 0.8)', border: 'rgba(59, 130, 246, 1)', text: '#1e40af' },    // Blue
+        { bg: 'rgba(139, 92, 246, 0.8)', border: 'rgba(139, 92, 246, 1)', text: '#5b21b6' },    // Purple
+        { bg: 'rgba(236, 72, 153, 0.8)', border: 'rgba(236, 72, 153, 1)', text: '#9f1239' },    // Pink
+        { bg: 'rgba(20, 184, 166, 0.8)', border: 'rgba(20, 184, 166, 1)', text: '#134e4a' },    // Teal
+        { bg: 'rgba(251, 191, 36, 0.8)', border: 'rgba(251, 191, 36, 1)', text: '#78350f' },    // Amber
+        { bg: 'rgba(99, 102, 241, 0.8)', border: 'rgba(99, 102, 241, 1)', text: '#3730a3' },    // Indigo
+        { bg: 'rgba(168, 85, 247, 0.8)', border: 'rgba(168, 85, 247, 1)', text: '#6b21a8' }     // Violet
+    ];
+
+    const backgroundColors = values.map((_, index) => colors[index % colors.length].bg);
+    const borderColors = values.map((_, index) => colors[index % colors.length].border);
+    const labelColors = values.map((_, index) => colors[index % colors.length].text);
+
     chartInstances.damagesChart = new Chart(ctx, {
         type: 'bar',
         data: {
@@ -511,11 +542,11 @@ function createDamagesChart(damagesData) {
             datasets: [{
                 label: 'Number of Reports',
                 data: values,
-                backgroundColor: 'rgba(239, 68, 68, 0.8)',
-                borderColor: 'rgba(239, 68, 68, 1)',
+                backgroundColor: backgroundColors,
+                borderColor: borderColors,
                 borderWidth: 2,
                 datalabels: {
-                    color: '#991b1b',
+                    color: labelColors,
                     anchor: 'end',
                     align: 'end',
                     font: {
