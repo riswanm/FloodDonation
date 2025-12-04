@@ -176,11 +176,13 @@ function aggregateByArea(rows) {
     rows.forEach(row => {
         if (!areaMap[row.area]) {
             areaMap[row.area] = {
+                families: 0,
                 people: 0,
                 adults: 0,
                 children: 0
             };
         }
+        areaMap[row.area].families++;
         areaMap[row.area].people += row.people;
         areaMap[row.area].adults += row.adults;
         areaMap[row.area].children += row.children;
@@ -283,13 +285,14 @@ function createAreaChart(areaData) {
 
     const ctx = document.getElementById('areaChart').getContext('2d');
     const areas = Object.keys(areaData);
+    const familiesData = areas.map(area => areaData[area].families);
     const peopleData = areas.map(area => areaData[area].people);
     const adultsData = areas.map(area => areaData[area].adults);
     const childrenData = areas.map(area => areaData[area].children);
 
     // Calculate dynamic height based on number of areas
     const chartContainer = document.querySelector('#areaChart').parentElement;
-    const minHeight = Math.max(350, areas.length * 80);
+    const minHeight = Math.max(400, areas.length * 90);
     chartContainer.style.minHeight = `${minHeight}px`;
 
     chartInstances.areaChart = new Chart(ctx, {
@@ -297,6 +300,22 @@ function createAreaChart(areaData) {
         data: {
             labels: areas,
             datasets: [
+                {
+                    label: 'Families',
+                    data: familiesData,
+                    backgroundColor: 'rgba(139, 92, 246, 0.8)',
+                    borderColor: 'rgba(139, 92, 246, 1)',
+                    borderWidth: 2,
+                    datalabels: {
+                        color: '#5b21b6',
+                        anchor: 'end',
+                        align: 'end',
+                        font: {
+                            weight: 'bold',
+                            size: 11
+                        }
+                    }
+                },
                 {
                     label: 'Total People',
                     data: peopleData,
