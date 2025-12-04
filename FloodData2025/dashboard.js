@@ -207,13 +207,13 @@ function categorizeJobs(rows) {
         
         if (!job || job === '') {
             jobCategories['Not Mentioned']++;
-        } else if (job.includes('self') || job.includes('employed')) {
+        } else if (job.includes('self')) {
             jobCategories['Self Employed']++;
         } else if (job.includes('business')) {
             jobCategories['Business']++;
-        } else if (job.includes('daily') || job.includes('wage')) {
+        } else if (job.includes('daily')) {
             jobCategories['Daily Wage']++;
-        } else if (job.includes('monthly') || job.includes('salary')) {
+        } else if (job.includes('monthly')) {
             jobCategories['Monthly Wage']++;
         } else {
             jobCategories['Other']++;
