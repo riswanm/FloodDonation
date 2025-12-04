@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>API Test - Flood Dashboard</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 900px;
+            margin: 40px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2563eb;
+            margin-bottom: 10px;
+        }
+        .status {
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+        .loading {
+            background: #fef3c7;
+            color: #92400e;
+            border-left: 4px solid #f59e0b;
+        }
+        .success {
+            background: #d1fae5;
+            color: #065f46;
+            border-left: 4px solid #10b981;
+        }
+        .error {
+            background: #fee2e2;
+            color: #991b1b;
+            border-left: 4px solid #ef4444;
+        }
+        .info {
+            background: #e0e7ff;
+            color: #3730a3;
+            border-left: 4px solid #6366f1;
+            font-size: 14px;
+        }
+        .test-btn {
+            background: #2563eb;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 10px 10px 10px 0;
+        }
+        .test-btn:hover {
+            background: #1d4ed8;
+        }
+        .test-btn:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+        }
+        pre {
+            background: #1f2937;
+            color: #10b981;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .step {
+            margin: 20px 0;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border-left: 3px solid #6366f1;
+        }
+        .step h3 {
+            margin-top: 0;
+            color: #3730a3;
+        }
+        code {
+            background: #f3f4f6;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #be123c;
+        }
+        a {
+            color: #2563eb;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Google Sheets API Test</h1>
+        <p>This page helps diagnose connection issues with your Google Sheet.</p>
+
+        <div class="info">
+            <strong>Current Configuration:</strong><br>
+            Sheet ID: <code id="sheetId">Loading...</code><br>
+            API Key: <code id="apiKey">Loading...</code><br>
+            Sheet Name: <code id="sheetName">Loading...</code>
+        </div>
+
+        <button class="test-btn" onclick="runTest()" id="testBtn">🚀 Run API Test</button>
+        <button class="test-btn" onclick="openSheet()" id="openSheetBtn">📊 Open Google Sheet</button>
+        <button class="test-btn" onclick="testSimple()" id="simpleTestBtn">🔍 Test Simple Query</button>
+
+        <div id="status"></div>
+        <div id="response"></div>
+
+        <div class="step">
+            <h3>📝 Step 1: Share Your Google Sheet</h3>
+            <ol>
+                <li>Click the <strong>"📊 Open Google Sheet"</strong> button above</li>
+                <li>Click the <strong>"Share"</strong> button (top-right corner)</li>
+                <li>Click <strong>"Change to anyone with the link"</strong></li>
+                <li>Make sure it says <strong>"Anyone with the link"</strong> as <strong>"Viewer"</strong></li>
+                <li>Click <strong>"Done"</strong></li>
+            </ol>
+            <p><strong>⚠️ This is the most common issue!</strong> If the sheet is not publicly accessible, you will get a 403 Forbidden error.</p>
+        </div>
+
+        <div class="step">
+            <h3>🔑 Step 2: Verify API Key</h3>
+            <ol>
+                <li>Go to <a href="https://console.cloud.google.com/apis/credentials" target="_blank">Google Cloud Console - Credentials</a></li>
+                <li>Make sure <strong>"Google Sheets API"</strong> is enabled in <a href="https://console.cloud.google.com/apis/library" target="_blank">API Library</a></li>
+                <li>Find your API key and click Edit</li>
+                <li>Under "API restrictions", select "Restrict key" and enable "Google Sheets API"</li>
+                <li>Save changes</li>
+            </ol>
+        </div>
+
+        <div class="step">
+            <h3>✅ Step 3: Test Again</h3>
+            <p>After completing steps 1 and 2, click the <strong>"🚀 Run API Test"</strong> button above to test the connection.</p>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script>
+        // Display config
+        document.getElementById('sheetId').textContent = CONFIG.SHEET_ID;
+        document.getElementById('apiKey').textContent = CONFIG.API_KEY.substring(0, 20) + '...';
+        document.getElementById('sheetName').textContent = CONFIG.SHEET_NAME;
+
+        function showStatus(message, type) {
+            const statusDiv = document.getElementById('status');
+            statusDiv.innerHTML = `<div class="status ${type}">${message}</div>`;
+        }
+
+        function showResponse(data) {
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = `<h3>Response Data:</h3><pre>${JSON.stringify(data, null, 2)}</pre>`;
+        }
+
+        function openSheet() {
+            const url = `https://docs.google.com/spreadsheets/d/${CONFIG.SHEET_ID}/edit`;
+            window.open(url, '_blank');
+        }
+
+        async function testSimple() {
+            const btn = document.getElementById('simpleTestBtn');
+            btn.disabled = true;
+            showStatus('🔍 Testing simple query (first 10 rows from column B)...', 'loading');
+            document.getElementById('response').innerHTML = '';
+
+            try {
+                const testUrl = `https://sheets.googleapis.com/v4/spreadsheets/${CONFIG.SHEET_ID}/values/${encodeURIComponent(CONFIG.SHEET_NAME)}!B2:B10?key=${CONFIG.API_KEY}`;
+                
+                console.log('Test URL:', testUrl);
+                
+                const response = await fetch(testUrl);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    let errorMsg = `❌ Error ${response.status}: ${response.statusText}`;
+                    
+                    if (data.error) {
+                        errorMsg += `<br><br><strong>Details:</strong> ${data.error.message}`;
+                        
+                        if (response.status === 403) {
+                            errorMsg += '<br><br><strong>🚨 Solution:</strong> Your Google Sheet is NOT publicly accessible. Please follow Step 1 above to share your sheet.';
+                        }
+                    }
+                    
+                    showStatus(errorMsg, 'error');
+                    showResponse(data);
+                } else {
+                    showStatus('✅ Success! Your sheet is accessible and data was retrieved.', 'success');
+                    showResponse(data);
+                }
+            } catch (error) {
+                showStatus(`❌ Network Error: ${error.message}<br><br>Check your internet connection or if the API key is correct.`, 'error');
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        async function runTest() {
+            const btn = document.getElementById('testBtn');
+            btn.disabled = true;
+            showStatus('⏳ Testing API connection...', 'loading');
+            document.getElementById('response').innerHTML = '';
+
+            try {
+                const apiUrl = CONFIG.getApiUrl();
+                console.log('Testing URL:', apiUrl);
+                
+                const response = await fetch(apiUrl);
+                const data = await response.json();
+
+                if (!response.ok) {
+                    let errorMsg = `❌ Error ${response.status}: ${response.statusText}`;
+                    
+                    if (data.error) {
+                        errorMsg += `<br><br><strong>Details:</strong> ${data.error.message}`;
+                        
+                        if (response.status === 403) {
+                            if (data.error.message.includes('PERMISSION_DENIED') || 
+                                data.error.message.includes('does not have permission')) {
+                                errorMsg += '<br><br><strong>🚨 SOLUTION:</strong> Your Google Sheet is NOT shared publicly.<br>Follow <strong>Step 1</strong> above to fix this issue.';
+                            } else if (data.error.message.includes('API key')) {
+                                errorMsg += '<br><br><strong>🚨 SOLUTION:</strong> API key issue. Check that:<br>1. Google Sheets API is enabled<br>2. API key is correct<br>3. API key restrictions allow Google Sheets API';
+                            }
+                        } else if (response.status === 404) {
+                            errorMsg += '<br><br><strong>🚨 SOLUTION:</strong> Sheet not found. Check your Sheet ID in config.js';
+                        } else if (response.status === 400) {
+                            errorMsg += '<br><br><strong>🚨 SOLUTION:</strong> Bad request. Check the sheet name and column ranges in config.js';
+                        }
+                    }
+                    
+                    showStatus(errorMsg, 'error');
+                    showResponse(data);
+                } else {
+                    // Count rows
+                    let totalRows = 0;
+                    if (data.valueRanges) {
+                        data.valueRanges.forEach(range => {
+                            if (range.values) {
+                                totalRows = Math.max(totalRows, range.values.length - 1); // -1 for header
+                            }
+                        });
+                    }
+                    
+                    showStatus(`✅ SUCCESS! Connection established and data retrieved.<br><br>📊 Found approximately <strong>${totalRows}</strong> data rows (excluding header).`, 'success');
+                    showResponse(data);
+                }
+            } catch (error) {
+                showStatus(`❌ Network Error: ${error.message}<br><br>This usually means:<br>1. No internet connection<br>2. API endpoint is blocked<br>3. CORS issue (try running from a web server)`, 'error');
+                console.error(error);
+            } finally {
+                btn.disabled = false;
+            }
+        }
+
+        // Auto-run test on load
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                if (CONFIG.API_KEY !== 'YOUR_API_KEY_HERE' && CONFIG.SHEET_ID !== 'YOUR_SHEET_ID_HERE') {
+                    showStatus('ℹ️ Ready to test. Click "Run API Test" button to check your connection.', 'info');
+                } else {
+                    showStatus('⚠️ Please configure your API Key and Sheet ID in config.js first.', 'error');
+                }
+            }, 500);
+        });
+    </script>
+</body>
+</html>

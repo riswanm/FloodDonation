@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="description" content="Thalduwa Flood Relief 2025 - Dashboard showing real-time data of affected families and relief efforts">
+    <title>Flood Impact Dashboard | Thalduwa Flood Relief 2025</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loading-spinner"></div>
+        <p class="loading-text">Loading flood data...</p>
+    </div>
+
+    <!-- Error Container -->
+    <div class="error-container" id="errorContainer" style="display: none;">
+        <div class="error-icon">⚠️</div>
+        <h2 class="error-title">Unable to Load Data</h2>
+        <p class="error-message" id="errorMessage"></p>
+        <p class="error-hint">Please check your internet connection or contact support.</p>
+    </div>
+
+    <!-- No Data Container -->
+    <div class="no-data-container" id="noDataContainer" style="display: none;">
+        <div class="no-data-icon">📊</div>
+        <h2 class="no-data-title">No Data Available</h2>
+        <p class="no-data-message">There are currently no flood damage records in the system.</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent" style="display: none;">
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <h1 class="header-title">Flood Impact Dashboard</h1>
+            <p class="header-subtitle">Thalduwa Flood Relief 2025</p>
+            <p class="header-location">Organized by Jawhariyya Mosque Thalduwa</p>
+            <div class="disclaimer-banner">
+                <span class="disclaimer-icon">⚠️</span>
+                <span class="disclaimer-text">Data collection is still ongoing. Numbers shown are not final and will be updated as more information is gathered.</span>
+            </div>
+        </div>
+    </header>        <!-- Summary Statistics -->
+        <section class="statistics">
+            <div class="container">
+                <h2 class="section-title">Impact Summary</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🏠</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statFamilies">0</div>
+                            <div class="stat-label">Families Affected</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">👥</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statPeople">0</div>
+                            <div class="stat-label">People Affected</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">👨</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statAdults">0</div>
+                            <div class="stat-label">Adults Affected</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">👶</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statChildren">0</div>
+                            <div class="stat-label">Children Affected</div>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🎓</div>
+                        <div class="stat-content">
+                            <div class="stat-value" id="statStudents">0</div>
+                            <div class="stat-label">Students Affected</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Area-wise Breakdown Chart -->
+        <section class="chart-section">
+            <div class="container">
+                <h2 class="section-title">Area-wise Impact</h2>
+                <p class="section-subtitle">People, adults, and children affected by area</p>
+                <div class="chart-container">
+                    <canvas id="areaChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Job Type Distribution Chart -->
+        <section class="chart-section">
+            <div class="container">
+                <h2 class="section-title">Employment Status</h2>
+                <p class="section-subtitle">Distribution of affected families by job type</p>
+                <div class="chart-container">
+                    <canvas id="jobChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Damages Chart -->
+        <section class="chart-section">
+            <div class="container">
+                <h2 class="section-title">Top 10 Damages Reported</h2>
+                <p class="section-subtitle">Most common types of damage across all families</p>
+                <div class="chart-container">
+                    <canvas id="damagesChart"></canvas>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-disclaimer">
+                    <strong>⚠️ Important Notice:</strong> This dashboard shows preliminary data. Data collection is still in progress and numbers are subject to change as more families are surveyed.
+                </div>
+                <p class="footer-text">© 2025 Jawhariyya Mosque Thalduwa Avissawella</p>
+                <p class="footer-text">All relief efforts serve all communities regardless of religion or ethnicity</p>
+                <p class="footer-update" id="lastUpdate">Last updated: Loading...</p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels@2.2.0/dist/chartjs-plugin-datalabels.min.js"></script>
+    <script>
+        // Verify plugins are loaded
+        if (typeof ChartDataLabels === 'undefined') {
+            console.error('ChartDataLabels plugin failed to load!');
+        } else {
+            console.log('ChartDataLabels plugin loaded successfully');
+        }
+    </script>
+    <script src="config.js"></script>
+    <script src="dashboard.js"></script>
+</body>
+</html>
