@@ -26,6 +26,7 @@ function initializeApp() {
     renderDonationTiers();
     renderAffectedAreas();
     renderReliefWork();
+    loadTimeline();
     
     // Set up event listeners
     setupEventListeners();
@@ -162,6 +163,102 @@ function renderReliefWork(append = false) {
                 });
             }
         });
+    }
+}
+
+// Load timeline items
+function loadTimeline() {
+    const container = document.getElementById('timelineContainer');
+    if (!container) return;
+    
+    // Render timeline items from data
+    const timelineHtml = timeline.map(item => `
+        <div class="timeline-item ${item.id % 2 === 0 ? 'left' : 'right'}" data-aos="fade-${item.id % 2 === 0 ? 'right' : 'left'}">
+            <div class="timeline-dot"></div>
+            <div class="timeline-content">
+                <div class="timeline-date">${item.date}</div>
+                <h3 class="timeline-title">${item.title}</h3>
+                ${item.description ? `<p class="timeline-description">${item.description}</p>` : ''}
+                <div class="timeline-images" id="timeline-images-${item.id}">
+                    <div class="timeline-loading">Loading images...</div>
+                </div>
+            </div>
+        </div>
+    `).join('');
+    
+    container.innerHTML = timelineHtml;
+    
+    // Load images for each timeline item
+    timeline.forEach(item => {
+        loadTimelineImages(item.id, item.driveFolder);
+    });
+}
+
+// Load images from Google Drive subfolder for a timeline item
+async function loadTimelineImages(itemId, folderName) {
+    const imagesContainer = document.getElementById(`timeline-images-${itemId}`);
+    if (!imagesContainer) return;
+    
+    try {
+        // First, find the subfolder by name in the relief work folder
+        const folderSearchUrl = `https://www.googleapis.com/drive/v3/files?` +
+            `q='${siteConfig.googleDrive.reliefWorkFolderId}'+in+parents+and+name='${folderName}'+and+mimeType='application/vnd.google-apps.folder'` +
+            `&key=${siteConfig.googleDrive.apiKey}` +
+            `&fields=files(id,name)`;
+        
+        const folderResponse = await fetch(folderSearchUrl);
+        const folderData = await folderResponse.json();
+        
+        if (!folderData.files || folderData.files.length === 0) {
+            imagesContainer.innerHTML = '';
+            return;
+        }
+        
+        const subfolderId = folderData.files[0].id;
+        
+        // Now fetch images from this subfolder (limit to 3)
+        const imagesUrl = `https://www.googleapis.com/drive/v3/files?` +
+            `q='${subfolderId}'+in+parents+and+(mimeType+contains+'image/')` +
+            `&key=${siteConfig.googleDrive.apiKey}` +
+            `&fields=files(id,name,thumbnailLink)` +
+            `&pageSize=3` +
+            `&orderBy=name`;
+        
+        const imagesResponse = await fetch(imagesUrl);
+        const imagesData = await imagesResponse.json();
+        
+        if (!imagesData.files || imagesData.files.length === 0) {
+            imagesContainer.innerHTML = '';
+            return;
+        }
+        
+        // Render images
+        const imagesHtml = imagesData.files.map(file => {
+            const thumbnailUrl = file.thumbnailLink ? file.thumbnailLink.replace('=s220', '=s400') : '';
+            const fullUrl = `https://drive.google.com/thumbnail?id=${file.id}&sz=w1000`;
+            return `
+                <div class="timeline-image">
+                    <img src="${thumbnailUrl}" 
+                         alt="${file.name}" 
+                         data-image-url="${fullUrl}"
+                         loading="lazy">
+                </div>
+            `;
+        }).join('');
+        
+        imagesContainer.innerHTML = imagesHtml;
+        
+        // Add click listeners to open images in modal
+        const imageElements = imagesContainer.querySelectorAll('img');
+        imageElements.forEach(img => {
+            img.addEventListener('click', function() {
+                openImageModal(this.getAttribute('data-image-url'));
+            });
+        });
+        
+    } catch (error) {
+        console.error('Error loading timeline images:', error);
+        imagesContainer.innerHTML = '';
     }
 }
 

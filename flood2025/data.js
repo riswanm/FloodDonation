@@ -139,3 +139,103 @@ const fundUsage = [
   "Repairing and rebuilding damaged houses",
   "Supporting all communities regardless of religion or ethnicity"
 ];
+
+// Timeline for flood relief activities
+// Each timeline item will load 3 images from the specified Google Drive subfolder
+const timeline =  [
+  {
+    id: 1,
+    title: "Devastating Flood Hits Thalduwa",
+    date: "November 28, 2025",
+    description: "A sudden and severe flood sweeps through Thalduwa, submerging most homes. Families are forced to flee with almost nothing, leaving behind destroyed belongings and damaged houses.",
+    driveFolder: "FloodDisaster_Nov27"
+  },
+  {
+    id: 2,
+    title: "Emergency Boat Rescue and Volunteer Response",
+    date: "November 28, 2025",
+    description: "Local volunteers courageously launch rescue missions using boats, saving stranded families and securing whatever belongings they can from rising waters.",
+    driveFolder: "RescueOperations_Nov28"
+  },
+  {
+    id: 3,
+    title: "Community Kitchen Begins Serving Flood Victims",
+    date: "November 29, 2025",
+    description: "With the help of villagers, a large community kitchen is set up at the mosque, providing warm meals three times a day to affected families who have lost access to cooking facilities.",
+    driveFolder: "CommunityKitchen_Nov29"
+  },
+  {
+    id: 31,
+    title: "Mosque Launches Donation Campaign",
+    date: "November 30, 2025",
+    description: "A heartfelt donation campaign is initiated to gather essential items for flood-affected families, reflecting the unity and compassion of the community.",
+    driveFolder: "DonationCompaign_Nov29"
+  },
+  {
+    id: 32,
+    title: "Distribution of Meals and Essential Supplies",
+    date: "December 01, 2025",
+    description: "Volunteers begin distributing cooked meals and essential relief items to families who have lost access to basic necessities.",
+    driveFolder: "Distribution_Nov30"
+  },
+  {
+    id: 33,
+    title: "Volunteers Visit Affected Homes",
+    date: "December 01, 2025",
+    description: "Teams of volunteers visit damaged homes to understand the suffering of families, offer emotional support, and document the losses.",
+    driveFolder: "Distribution_Nov30"
+  },
+  {
+    id: 4,
+    title: "Free Medical Camp Held for Flood Victims",
+    date: "December 2, 2025",
+    description: "A medical camp provides urgent healthcare, treating injuries, infections, and stress-related conditions among affected people.",
+    driveFolder: "MedicalCamp_Dec02"
+  },
+  {
+    id: 41,
+    title: "Dry Ration Packs and Mattresses Distributed",
+    date: "December 2, 2025",
+    description: "Families receive dry food packs and mattresses to ease their immediate hardships and help them rebuild their daily life.",
+    driveFolder: "DryPackDistDev02"
+  },
+  {
+    id: 42,
+    title: "Clothing Distributed to Flood-Affected Families",
+    date: "December 3, 2025",
+    description: "New clothes and dresses are distributed, bringing comfort and dignity to people who lost almost everything in the floods.",
+    driveFolder: "CLothDist"
+  },
+  {
+    id: 43,
+    title: "Housing Damage Data Collection Begins",
+    date: "December 3, 2025",
+    description: "Volunteers start a systematic data collection project, documenting every affected home to ensure fair and organized relief support.",
+    driveFolder: "DataCollection"
+  },
+  {
+    id: 5,
+    title: "Volunteer House Cleaning Initiative",
+    date: "December 4, 2025",
+    description: "Volunteers from surrounding areas join hands to clean mud-filled homes, helping families return to a sense of normalcy.",
+    driveFolder: "HouseCLeaning"
+  },
+  {
+    id: 51,
+    title: "Counselling Support for Affected Families",
+    date: "December 6, 2025",
+    description: "A counselling program is launched to provide emotional support over the phone, helping victims cope with trauma and stress.",
+    driveFolder: "Counselling"
+  },
+  {
+  id: 52,
+  title: "Data Collection for Affected Shops Begins",
+  date: "December 6, 2025",
+  description: "Volunteers begin documenting damage to shops and small businesses, ensuring that every affected shop owner’s losses are recorded so relief and support can reach them quickly.",
+  driveFolder: "Counselling"
+}
+
+];
+
+ 
+
