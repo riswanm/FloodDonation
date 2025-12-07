@@ -237,7 +237,7 @@ const timeline =  [
 {
   id: 53,
   title: "Volunteer Support to Repair Electrical and Wiring Damages",
-  date: "December 6, 2025",
+  date: "December 7, 2025",
   description: "Dedicated volunteers step in to repair damaged electrical systems and wiring in affected homes, helping families restore safety and stability after the floods.",
   driveFolder: "ElectricSupport"
 }
