@@ -11,7 +11,6 @@ const translations = {
     heroMessage: "Your compassion has the power to transform lives. Together, we can bring hope, restore homes, and rebuild dreams for families devastated by the floods.",
     timelineTitle: "Our Journey of Relief & Recovery",
     affectedAreasTitle: "Affected Areas",
-    reliefWorkTitle: "Our Relief Work",
     fundUsageTitle: "How Your Donation Helps",
     quickDonationTitle: "Quick Donation",
     bankAccountTitle: "Bank Account Details",
@@ -53,7 +52,6 @@ const translations = {
     heroMessage: "உங்கள் இரக்கம் வாழ்க்கையை மாற்றும் சக்தி கொண்டது. ஒன்றாக இணைந்து, வெள்ளத்தால் பாதிக்கப்பட்ட குடும்பங்களுக்கு நம்பிக்கையை அளிக்கலாம், வீடுகளை மீட்டெடுக்கலாம், கனவுகளை மீண்டும் கட்டியெழுப்பலாம்.",
     timelineTitle: "நிவாரணம் & மீட்பின் பயணம்",
     affectedAreasTitle: "பாதிக்கப்பட்ட பகுதிகள்",
-    reliefWorkTitle: "எங்கள் நிவாரணப் பணிகள்",
     fundUsageTitle: "உங்கள் நன்கொடை எவ்வாறு உதவுகிறது",
     quickDonationTitle: "விரைவு நன்கொடை",
     bankAccountTitle: "வங்கிக் கணக்கு விவரங்கள்",
@@ -127,11 +125,10 @@ function updatePageContent() {
   sectionTitles[0].textContent = t('droneFootageTitle');
   sectionTitles[1].textContent = t('timelineTitle');
   sectionTitles[2].textContent = t('affectedAreasTitle');
-  sectionTitles[3].textContent = t('reliefWorkTitle');
-  sectionTitles[4].textContent = t('fundUsageTitle');
-  sectionTitles[5].textContent = t('quickDonationTitle');
-  sectionTitles[6].textContent = t('bankAccountTitle');
-  sectionTitles[7].textContent = t('contactPersonsTitle');
+  sectionTitles[3].textContent = t('fundUsageTitle');
+  sectionTitles[4].textContent = t('quickDonationTitle');
+  sectionTitles[5].textContent = t('bankAccountTitle');
+  sectionTitles[6].textContent = t('contactPersonsTitle');
   
   // Bank account labels
   document.querySelectorAll('.account-label')[0].textContent = t('bank');

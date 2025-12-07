@@ -25,7 +25,6 @@ function initializeApp() {
     // Render dynamic cards
     renderDonationTiers();
     renderAffectedAreas();
-    renderReliefWork();
     loadTimeline();
     
     // Set up event listeners
@@ -131,39 +130,9 @@ function renderAffectedAreas(append = false) {
     }
 }
 
-// Render relief work cards
+// Render relief work cards (no longer used)
 function renderReliefWork(append = false) {
-    const grid = document.getElementById('reliefWorkGrid');
-    if (grid) {
-        const images = append ? imageLoader.loadMoreReliefWork() : imageLoader.getReliefWorkImages(0);
-        
-        const cardsHtml = images.map(work => `
-            <div class="card" data-aos="fade-up">
-                <img src="${work.thumbnailUrl}" 
-                     alt="${work.title}" 
-                     class="card-image" 
-                     data-image-url="${work.fullUrl}"
-                     loading="lazy">
-            </div>
-        `).join('');
-        
-        if (append) {
-            grid.insertAdjacentHTML('beforeend', cardsHtml);
-        } else {
-            grid.innerHTML = cardsHtml;
-        }
-        
-        // Add click listeners to new images
-        const imageElements = grid.querySelectorAll('.card-image');
-        imageElements.forEach(img => {
-            if (!img.hasAttribute('data-listener')) {
-                img.setAttribute('data-listener', 'true');
-                img.addEventListener('click', function() {
-                    openImageModal(this.getAttribute('data-image-url'));
-                });
-            }
-        });
-    }
+    return;
 }
 
 // Load timeline items

@@ -511,11 +511,6 @@ section {
     background: var(--bg-white);
 }
 
-/* Relief Work Section */
-.relief-work {
-    background: var(--bg-light);
-}
-
 /* Contact & Account Details Section */
 .contact-details {
     background: var(--bg-white);
