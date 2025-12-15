@@ -244,7 +244,7 @@ const timeline =  [
 ,
 {
   id: 531,
-  title: "A clarification session on how to document flood-related damages to Shops was conducted",
+  title: "A clarification session on how to document flood-related damages of Shops was conducted",
   date: "December 15, 2025",
   description: "A clarification session on how to document flood-related damages was conducted today by Advocate Iqbal",
   driveFolder: "ShopDocument"
