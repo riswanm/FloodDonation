@@ -241,6 +241,14 @@ const timeline =  [
   description: "Dedicated volunteers step in to repair damaged electrical systems and wiring in affected homes, helping families restore safety and stability after the floods.",
   driveFolder: "ElectricSupport"
 }
+,
+{
+  id: 531,
+  title: "A clarification session on how to document flood-related damages to Shops was conducted",
+  date: "December 15, 2025",
+  description: "A clarification session on how to document flood-related damages was conducted today by Advocate Iqbal",
+  driveFolder: "ShopDocument"
+}
 
 
 
