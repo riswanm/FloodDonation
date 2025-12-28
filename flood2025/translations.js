@@ -9,9 +9,10 @@ const translations = {
     droneFootageSubtitle: "Aerial view of the flood-affected areas",
     heroTitle: "Your Support Changes Lives",
     heroMessage: "Your compassion has the power to transform lives. Together, we can bring hope, restore homes, and rebuild dreams for families devastated by the floods.",
+    reliefProgressTitle: "Relief Progress",
+    reliefProgressSubtitle: "Tracking our multi-phase relief and recovery efforts",
     timelineTitle: "Our Journey of Relief & Recovery",
-    affectedAreasTitle: "Affected Areas",
-    fundUsageTitle: "How Your Donation Helps",
+    affectedAreasTitle: "Areas Affected by Floods",
     quickDonationTitle: "Quick Donation",
     bankAccountTitle: "Bank Account Details",
     contactPersonsTitle: "Contact Persons",
@@ -50,9 +51,10 @@ const translations = {
     droneFootageSubtitle: "வெள்ளத்தால் பாதிக்கப்பட்ட பகுதிகளின் வான்வழிக் காட்சி",
     heroTitle: "உங்கள் ஆதரவு வாழ்க்கையை மாற்றுகிறது",
     heroMessage: "உங்கள் இரக்கம் வாழ்க்கையை மாற்றும் சக்தி கொண்டது. ஒன்றாக இணைந்து, வெள்ளத்தால் பாதிக்கப்பட்ட குடும்பங்களுக்கு நம்பிக்கையை அளிக்கலாம், வீடுகளை மீட்டெடுக்கலாம், கனவுகளை மீண்டும் கட்டியெழுப்பலாம்.",
+    reliefProgressTitle: "நிவாரண முன்னேற்றம்",
+    reliefProgressSubtitle: "பல கட்ட நிவாரணம் மற்றும் மீட்பு முயற்சிகளின் முன்னேற்றத்தை கண்காணித்தல்",
     timelineTitle: "நிவாரணம் & மீட்பின் பயணம்",
-    affectedAreasTitle: "பாதிக்கப்பட்ட பகுதிகள்",
-    fundUsageTitle: "உங்கள் நன்கொடை எவ்வாறு உதவுகிறது",
+    affectedAreasTitle: "வெள்ளத்தால் பாதிக்கப்பட்ட பகுதிகள்",
     quickDonationTitle: "விரைவு நன்கொடை",
     bankAccountTitle: "வங்கிக் கணக்கு விவரங்கள்",
     contactPersonsTitle: "தொடர்பு நபர்கள்",
@@ -119,16 +121,25 @@ function updatePageContent() {
   // Hero section
   document.querySelector('.impact-title').textContent = t('heroTitle');
   document.querySelector('.impact-hero-text').textContent = t('heroMessage');
-  
-  // Section titles
-  const sectionTitles = document.querySelectorAll('.section-title');
-  sectionTitles[0].textContent = t('droneFootageTitle');
-  sectionTitles[1].textContent = t('timelineTitle');
-  sectionTitles[2].textContent = t('affectedAreasTitle');
-  sectionTitles[3].textContent = t('fundUsageTitle');
-  sectionTitles[4].textContent = t('quickDonationTitle');
-  sectionTitles[5].textContent = t('bankAccountTitle');
-  sectionTitles[6].textContent = t('contactPersonsTitle');
+
+  // Section titles/subtitles (target by section to avoid index/order bugs)
+  const reliefProgressTitle = document.querySelector('.relief-progress .section-title');
+  if (reliefProgressTitle) reliefProgressTitle.textContent = t('reliefProgressTitle');
+  const reliefProgressSubtitle = document.querySelector('.relief-progress .section-subtitle');
+  if (reliefProgressSubtitle) reliefProgressSubtitle.textContent = t('reliefProgressSubtitle');
+
+  const timelineTitle = document.querySelector('.timeline-section .section-title');
+  if (timelineTitle) timelineTitle.textContent = t('timelineTitle');
+
+  const affectedAreasTitle = document.querySelector('.affected-areas .section-title');
+  if (affectedAreasTitle) affectedAreasTitle.textContent = t('affectedAreasTitle');
+
+  const donationTitle = document.querySelector('.donation-tiers .section-title');
+  if (donationTitle) donationTitle.textContent = t('quickDonationTitle');
+
+  const contactSectionTitles = document.querySelectorAll('.contact-details .section-title');
+  if (contactSectionTitles.length >= 1) contactSectionTitles[0].textContent = t('bankAccountTitle');
+  if (contactSectionTitles.length >= 2) contactSectionTitles[1].textContent = t('contactPersonsTitle');
   
   // Bank account labels
   document.querySelectorAll('.account-label')[0].textContent = t('bank');

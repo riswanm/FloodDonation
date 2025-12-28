@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', async function() {
 function initializeApp() {
     // Render static content from data
     renderFloodDescription();
-    renderFundUsage();
     renderAccountDetails();
     renderContactPersons();
     
@@ -36,14 +35,6 @@ function renderFloodDescription() {
     const descElement = document.getElementById('floodDescription');
     if (descElement) {
         descElement.textContent = siteConfig.floodInfo.description;
-    }
-}
-
-// Render fund usage list
-function renderFundUsage() {
-    const listElement = document.getElementById('fundUsageList');
-    if (listElement) {
-        listElement.innerHTML = fundUsage.map(item => `<li>${item}</li>`).join('');
     }
 }
 
