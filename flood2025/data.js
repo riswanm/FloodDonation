@@ -179,6 +179,13 @@ const timeline =  [
     driveFolder: "DistributionMeals"
   },
   {
+    id: 321,
+    title: "Meals support from people of Embilipitiya Area",
+    date: "December 01, 2025",
+    description: "Meals support from the people of the Embilipitiya area is gratefully and sincerely appreciated",
+    driveFolder: "MealFromEmbilipitiya"
+  },
+  {
     id: 33,
     title: "Volunteers Visit Affected Homes",
     date: "December 01, 2025",
