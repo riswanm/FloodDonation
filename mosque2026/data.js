@@ -11,19 +11,41 @@ const CONFIG = {
     currencySymbol: 'Rs.',
     
     // Project Details
-    projectTitle: 'Mosque Maintenance & Facility Upgrade',
-    projectSubtitle: 'Ramadan 2026 Fund Collection',
+    projectTitle: 'Jawhariyya Jumma Masjid Thalduwa – Avissawella',
+    projectSubtitle: 'Continuous Charity (Sadaqah Jariyah)',
+    mosquePhone: '036 222 2077',
     
-    // Contact Information
-    contactWhatsApp: '+94XXXXXXXXX',
+    // Contact Information (from flood2025)
+    contactWhatsApp: '+94772960630',
     contactEmail: 'mosque@example.com',
+    contactPersons: [
+        {
+            name: "A.L.M. Amanullah",
+            role: "President",
+            phone: "+94 77 296 0630"
+        },
+        {
+            name: "M.H.M. Fawaz",
+            role: "Secretary",
+            phone: "+94 78 757 1876"
+        }
+    ],
     
-    // Bank Details for Donation
+    // Bank Details for Donation (from flood2025)
     bankDetails: {
-        bankName: 'Bank Name',
-        accountName: 'Mosque Fund Account',
-        accountNumber: 'XXXX-XXXX-XXXX',
-        branch: 'Branch Name'
+        bankName: "People's Bank",
+        accountName: 'Al Jawhari Jummah Masjid',
+        accountNumber: '0291 0010 0038 726',
+        branch: 'Avissawella'
+    },
+    
+    // Google Sheets Integration
+    googleSheets: {
+        // Replace with your deployed Google Apps Script URL
+        scriptUrl: 'https://script.google.com/macros/s/AKfycbxSBG5_spS4bHcWoGHVmS13_wfjCk4GR3byvuqd7YoaREOOJPKF63nJaAleNXnUKSQQ/exec', // Will be set after deploying the script
+        // Sheet names
+        bookingsSheet: 'Bookings',
+        configSheet: 'Config'
     }
 };
 
@@ -32,34 +54,18 @@ CONFIG.totalShares = CONFIG.totalAmount / CONFIG.sharePrice;
 
 // ===========================================
 // SHARES ISSUED
-// Simply set the number of shares that have been issued/purchased
-// Shares 1 to SHARES_ISSUED are considered as issued
+// This value will be dynamically loaded from Google Sheets
+// Default value is used until data is fetched
 // ===========================================
-const SHARES_ISSUED = 103;  // Update this number as shares are purchased
+let SHARES_ISSUED = 0;  // Will be updated from Google Sheets
 
 // ===========================================
 // ISLAMIC QUOTES ABOUT CHARITY
 // ===========================================
 const CHARITY_QUOTES = [
     {
-        text: "The believer's shade on the Day of Resurrection will be his charity.",
-        source: "Prophet Muhammad (ﷺ) - Al-Tirmidhi"
-    },
-    {
-        text: "Charity does not decrease wealth.",
-        source: "Prophet Muhammad (ﷺ) - Sahih Muslim"
-    },
-    {
-        text: "The example of those who spend their wealth in the way of Allah is like a seed which grows seven spikes; in each spike is a hundred grains.",
-        source: "Quran 2:261"
-    },
-    {
         text: "Whoever builds a mosque for Allah, Allah will build for him a house in Paradise.",
         source: "Prophet Muhammad (ﷺ) - Sahih Bukhari"
-    },
-    {
-        text: "The best of deeds is to bring happiness to a fellow Muslim.",
-        source: "Prophet Muhammad (ﷺ)"
     }
 ];
 
@@ -71,7 +77,7 @@ const PROJECT_INFO = {
     
     objectives: [
         'Prayer hall renovation and carpet replacement',
-        'Air conditioning and ventilation upgrade',
+        'Air conditioning and ventilation installation',
         'General maintenance and repairs'
     ]
 };
