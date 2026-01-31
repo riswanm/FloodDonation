@@ -539,9 +539,9 @@ function setupEventListeners() {
 // ===========================================
 
 /**
- * Open share modal and capture dashboard
+ * Open dashboard share modal and capture dashboard
  */
-async function openShareModal() {
+async function openDashboardShareModal() {
     const shareModal = document.getElementById('shareModalContent');
     
     // Show loading state
@@ -764,7 +764,7 @@ function closeShareModal() {
 
 // Expose functions to global scope for onclick handlers
 window.closeModal = closeModal;
-window.openShareModal = openShareModal;
+window.openDashboardShareModal = openDashboardShareModal;
 window.closeShareModal = closeShareModal;
 window.downloadDashboard = downloadDashboard;
 window.shareToWhatsApp = shareToWhatsApp;

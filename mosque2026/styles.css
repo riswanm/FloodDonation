@@ -51,9 +51,6 @@ body {
     background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary-green) 100%);
     color: var(--white);
     padding: 20px 0;
-    position: sticky;
-    top: 0;
-    z-index: 100;
     box-shadow: 0 4px 20px var(--shadow-dark);
 }
 
@@ -693,12 +690,28 @@ body {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+    .header {
+        padding: 15px 0;
+    }
+    
     .header h1 {
-        font-size: 1.4rem;
+        font-size: 1.2rem;
+        margin-bottom: 3px;
     }
 
     .header h2 {
-        font-size: 0.95rem;
+        font-size: 0.85rem;
+        margin-bottom: 8px;
+    }
+    
+    .header p {
+        font-size: 0.8rem !important;
+        margin-top: 3px !important;
+    }
+    
+    .islamic-pattern {
+        font-size: 1.5rem;
+        margin-bottom: 5px;
     }
 
     .language-toggle {
@@ -712,12 +725,17 @@ body {
     }
 
     .quote-section {
-        padding: 12px 15px;
-        margin: 10px 15px;
+        padding: 10px 12px;
+        margin: 8px 15px;
     }
 
     .quote-text {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
+        margin-bottom: 5px;
+    }
+    
+    .quote-source {
+        font-size: 0.75rem;
     }
 
     .stats-section {
