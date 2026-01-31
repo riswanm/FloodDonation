@@ -29,17 +29,63 @@ async function initializeApp() {
     await loadIssuedSharesFromSheet();
     
     // Render all components
-    renderQuote();
-    renderStats();
-    renderProjectInfo();
-    renderShares();
-    renderBankDetails();
+    renderAllContent();
     
     // Setup event listeners
     setupEventListeners();
     
+    // Update active language button
+    updateActiveLanguageButton();
+    
     // Hide loading
     hideLoading();
+}
+
+/**
+ * Render all translatable content
+ */
+function renderAllContent() {
+    renderHeaderContent();
+    renderQuote();
+    renderStats();
+    renderSectionHeadings();
+    renderProjectInfo();
+    renderShares();
+    renderBankDetails();
+}
+
+/**
+ * Render header content with translations
+ */
+function renderHeaderContent() {
+    document.getElementById('mosqueTitle').textContent = t('header.mosqueTitle');
+    document.getElementById('projectTitle').textContent = t('header.projectTitle');
+    document.getElementById('sadaqahJariyah').textContent = t('header.sadaqahJariyah');
+}
+
+/**
+ * Render section headings with translations
+ */
+function renderSectionHeadings() {
+    document.getElementById('progressTitle').textContent = t('sections.collectionProgress');
+    document.getElementById('sharesTitle').textContent = '🎫 ' + t('sections.sponsorshipShares');
+    document.getElementById('sharesSubtitle').textContent = t('sections.sharesSubtitle');
+    document.getElementById('legendAvailable').textContent = t('sections.available');
+    document.getElementById('legendIssued').textContent = t('sections.issued');
+    document.getElementById('projectTitle2').textContent = '📋 ' + t('sections.aboutProject');
+    document.getElementById('contactTitle').textContent = '💝 ' + t('sections.howToDonate');
+    document.getElementById('contactSubtitle').textContent = t('sections.donateSubtitle');
+    document.getElementById('bankTitle').textContent = '🏦 ' + t('sections.bankTransferDetails');
+    document.getElementById('loadingText').textContent = t('sections.loading');
+}
+
+/**
+ * Update active language button
+ */
+function updateActiveLanguageButton() {
+    document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+    const activeBtn = currentLanguage === 'en' ? document.getElementById('langEn') : document.getElementById('langTa');
+    if (activeBtn) activeBtn.classList.add('active');
 }
 
 /**
@@ -87,11 +133,10 @@ async function loadIssuedSharesFromSheet() {
  */
 function renderQuote() {
     const quoteContainer = document.getElementById('quoteSection');
-    const randomQuote = CHARITY_QUOTES[Math.floor(Math.random() * CHARITY_QUOTES.length)];
     
     quoteContainer.innerHTML = `
-        <p class="quote-text">"${randomQuote.text}"</p>
-        <p class="quote-source">— ${randomQuote.source}</p>
+        <p class="quote-text">"${t('quote.text')}"</p>
+        <p class="quote-source">— ${t('quote.source')}</p>
     `;
 }
 
@@ -140,16 +185,28 @@ function renderStats() {
     // Update progress bar
     document.getElementById('progressPercentage').textContent = `${stats.percentage.toFixed(1)}%`;
     document.getElementById('progressBar').style.width = `${stats.percentage}%`;
+    
+    // Update stat labels with translations
+    const statLabels = document.querySelectorAll('.stat-label');
+    if (statLabels.length >= 6) {
+        statLabels[0].textContent = t('stats.targetAmount');
+        statLabels[1].textContent = t('stats.collectedAmount');
+        statLabels[2].textContent = t('stats.remainingAmount');
+        statLabels[3].textContent = t('stats.totalShares');
+        statLabels[4].textContent = t('stats.sharesIssued');
+        statLabels[5].textContent = t('stats.sharesAvailable');
+    }
 }
 
 /**
  * Render project information
  */
 function renderProjectInfo() {
-    document.getElementById('projectDescription').textContent = PROJECT_INFO.description;
+    document.getElementById('projectDescription').textContent = t('projectInfo.description');
     
     const objectivesList = document.getElementById('objectivesList');
-    objectivesList.innerHTML = PROJECT_INFO.objectives
+    const objectives = getObjectives(currentLanguage);
+    objectivesList.innerHTML = objectives
         .map(obj => `<li>✦ ${obj}</li>`)
         .join('');
 }
@@ -213,52 +270,51 @@ function openShareModal(shareNumber, isIssued) {
     
     if (isIssued) {
         modal.innerHTML = `
-            <h4>Share Issued ✓</h4>
+            <h4>${t('modal.shareIssued')} ✓</h4>
             <div class="modal-share-number">#${shareNumber}</div>
-            <p>This share has been generously sponsored.</p>
+            <p>${t('modal.shareSponsored')}</p>
             <p class="modal-price">${formatCurrency(CONFIG.sharePrice)}</p>
-            <p style="color: var(--primary-light); font-style: italic;">May Allah reward them abundantly.</p>
-            <button class="modal-close" onclick="closeModal()">Close</button>
+            <p style="color: var(--primary-light); font-style: italic;">${t('modal.mayAllahReward')}</p>
+            <button class="modal-close" onclick="closeModal()">${t('modal.close')}</button>
         `;
     } else {
         // Show booking form for available shares
         const availableShares = CONFIG.totalShares - SHARES_ISSUED;
         modal.innerHTML = `
-            <h4>📝 Book Your Shares</h4>
-            <div class="modal-share-number">Starting from #${shareNumber}</div>
-            <p class="modal-price">${formatCurrency(CONFIG.sharePrice)} per share</p>
+            <h4>📝 ${t('modal.bookYourShares')}</h4>
+            <div class="modal-share-number">${t('modal.startingFrom')} #${shareNumber}</div>
+            <p class="modal-price">${formatCurrency(CONFIG.sharePrice)} ${t('modal.perShare')}</p>
             
             <form id="bookingForm" class="booking-form">
                 <div class="form-group">
-                    <label for="donorName">Your Name *</label>
-                    <input type="text" id="donorName" name="donorName" required placeholder="Enter your full name">
+                    <label for="donorName">${t('form.yourName')} *</label>
+                    <input type="text" id="donorName" name="donorName" required placeholder="${t('form.namePlaceholder')}">
                 </div>
                 
                 <div class="form-group">
-                    <label for="donorPhone">Phone Number *</label>
-                    <input type="tel" id="donorPhone" name="donorPhone" required placeholder="e.g., 077 123 4567">
+                    <label for="donorPhone">${t('form.phoneNumber')} *</label>
+                    <input type="tel" id="donorPhone" name="donorPhone" required placeholder="${t('form.phonePlaceholder')}">
                 </div>
                 
                 <div class="form-group">
-                    <label for="numShares">Number of Shares *</label>
-                    <input type="number" id="numShares" name="numShares" required min="1" max="${Math.min(availableShares, 400)}" value="1" placeholder="Enter number of shares">
+                    <label for="numShares">${t('form.numberOfShares')} *</label>
+                    <input type="number" id="numShares" name="numShares" required min="1" max="${Math.min(availableShares, 400)}" value="1" placeholder="${t('form.sharesPlaceholder')}">
                 </div>
                 
                 <div class="form-total" id="formTotal">
-                    Total: ${formatCurrency(CONFIG.sharePrice)}
+                    ${t('form.total')}: ${formatCurrency(CONFIG.sharePrice)}
                 </div>
                 
                 <p class="form-note">
-                    Our committee will contact you to arrange payment. 
-                    You can also deposit directly and share the slip via WhatsApp.
+                    ${t('form.contactNote')}
                 </p>
                 
                 <div class="form-buttons">
                     <button type="submit" class="btn btn-primary btn-submit">
-                        ✓ Submit Request
+                        ✓ ${t('form.submitRequest')}
                     </button>
                     <button type="button" class="btn btn-outline" onclick="closeModal()">
-                        Cancel
+                        ${t('form.cancel')}
                     </button>
                 </div>
             </form>
@@ -283,7 +339,7 @@ function setupBookingForm(startingShare) {
     numSharesInput.addEventListener('input', () => {
         const numShares = parseInt(numSharesInput.value) || 1;
         const total = numShares * CONFIG.sharePrice;
-        formTotal.textContent = `Total: ${formatCurrency(total)}`;
+        formTotal.textContent = `${t('form.total')}: ${formatCurrency(total)}`;
     });
     
     // Handle form submission
@@ -296,7 +352,7 @@ function setupBookingForm(startingShare) {
         
         // Validate
         if (!donorName || !donorPhone || !numShares) {
-            alert('Please fill in all required fields.');
+            alert(t('form.fillAllFields'));
             return;
         }
         
@@ -320,7 +376,7 @@ async function submitBooking(bookingData) {
     // Show loading state
     const submitBtn = modal.querySelector('.btn-submit');
     const originalText = submitBtn.innerHTML;
-    submitBtn.innerHTML = '⏳ Submitting...';
+    submitBtn.innerHTML = `⏳ ${t('form.submitting')}`;
     submitBtn.disabled = true;
     
     try {
@@ -358,35 +414,35 @@ async function submitBooking(bookingData) {
 function showBookingSuccess(bookingData) {
     const modal = document.getElementById('modalContent');
     const whatsappMessage = encodeURIComponent(
-        `Assalamu Alaikum,\n\nI would like to sponsor ${bookingData.numShares} share(s) for the Mosque Maintenance Fund.\n\nName: ${bookingData.donorName}\nPhone: ${bookingData.donorPhone}\nShares: ${bookingData.numShares}\nTotal: ${formatCurrency(bookingData.totalAmount)}\n\nJazakAllah Khair`
+        `Assalamu Alaikum,\n\n${t('success.whatsappMessage').replace('{shares}', bookingData.numShares)}\n\n${t('form.yourName')}: ${bookingData.donorName}\n${t('form.phoneNumber')}: ${bookingData.donorPhone}\n${t('modal.shares')}: ${bookingData.numShares}\n${t('form.total')}: ${formatCurrency(bookingData.totalAmount)}\n\nJazakAllah Khair`
     );
     
     modal.innerHTML = `
         <div class="success-message">
             <div class="success-icon">✓</div>
-            <h4>Request Submitted!</h4>
-            <p>JazakAllah Khair, <strong>${bookingData.donorName}</strong>!</p>
-            <p>Your request for <strong>${bookingData.numShares} share(s)</strong> (${formatCurrency(bookingData.totalAmount)}) has been noted.</p>
+            <h4>${t('success.requestSubmitted')}</h4>
+            <p>${t('success.jazakAllah')}, <strong>${bookingData.donorName}</strong>!</p>
+            <p>${t('success.requestFor').replace('{shares}', bookingData.numShares)} (${formatCurrency(bookingData.totalAmount)}) ${t('success.hasBeenNoted')}</p>
             
             <div class="success-info">
-                <p>Our committee will contact you soon at:</p>
+                <p>${t('success.committeeWillContact')}</p>
                 <p><strong>${bookingData.donorPhone}</strong></p>
             </div>
             
-            <p class="success-note">You can also deposit directly and share the payment slip via WhatsApp:</p>
+            <p class="success-note">${t('success.depositNote')}</p>
             
             <div class="bank-summary">
                 <p><strong>${CONFIG.bankDetails.bankName}</strong></p>
                 <p>${CONFIG.bankDetails.accountName}</p>
-                <p>A/C: ${CONFIG.bankDetails.accountNumber}</p>
+                <p>${t('bank.accountNumber')}: ${CONFIG.bankDetails.accountNumber}</p>
             </div>
             
             <div class="form-buttons">
                 <a href="https://wa.me/${CONFIG.contactWhatsApp.replace('+', '')}?text=${whatsappMessage}" 
                    class="btn btn-primary" target="_blank">
-                    📱 Open WhatsApp
+                    📱 ${t('success.openWhatsApp')}
                 </a>
-                <button class="modal-close" onclick="closeModal()">Close</button>
+                <button class="modal-close" onclick="closeModal()">${t('modal.close')}</button>
             </div>
         </div>
     `;
@@ -408,19 +464,19 @@ function renderBankDetails() {
     
     bankDetailsContainer.innerHTML = `
         <div class="bank-info-item">
-            <div class="bank-info-label">Bank Name</div>
+            <div class="bank-info-label">${t('bank.bankName')}</div>
             <div class="bank-info-value">${bankDetails.bankName}</div>
         </div>
         <div class="bank-info-item">
-            <div class="bank-info-label">Account Name</div>
+            <div class="bank-info-label">${t('bank.accountName')}</div>
             <div class="bank-info-value">${bankDetails.accountName}</div>
         </div>
         <div class="bank-info-item">
-            <div class="bank-info-label">Account Number</div>
+            <div class="bank-info-label">${t('bank.accountNumber')}</div>
             <div class="bank-info-value">${bankDetails.accountNumber}</div>
         </div>
         <div class="bank-info-item">
-            <div class="bank-info-label">Branch</div>
+            <div class="bank-info-label">${t('bank.branch')}</div>
             <div class="bank-info-value">${bankDetails.branch}</div>
         </div>
     `;
@@ -428,13 +484,15 @@ function renderBankDetails() {
     // Update WhatsApp link
     const whatsappLink = document.getElementById('whatsappLink');
     if (whatsappLink) {
-        whatsappLink.href = `https://wa.me/${CONFIG.contactWhatsApp.replace('+', '')}?text=I want to donate for Mosque Maintenance Fund`;
+        whatsappLink.href = `https://wa.me/${CONFIG.contactWhatsApp.replace('+', '')}?text=${t('contact.whatsappText')}`;
+        whatsappLink.innerHTML = `📱 ${t('contact.whatsapp')}`;
     }
     
     // Update email link
     const emailLink = document.getElementById('emailLink');
     if (emailLink) {
-        emailLink.href = `mailto:${CONFIG.contactEmail}?subject=Mosque Maintenance Fund Donation`;
+        emailLink.href = `mailto:${CONFIG.contactEmail}?subject=${t('contact.emailSubject')}`;
+        emailLink.innerHTML = `✉️ ${t('contact.email')}`;
     }
 }
 

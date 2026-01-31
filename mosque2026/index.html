@@ -18,16 +18,25 @@
     
     <!-- Stylesheet -->
     <link rel="stylesheet" href="styles.css">
+    
+    <!-- html2canvas for screenshots -->
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
 </head>
 <body>
     <!-- Header -->
     <header class="header">
         <div class="container">
             <div class="header-content">
+                <!-- Language Toggle -->
+                <div class="language-toggle">
+                    <button class="lang-btn" id="langEn" onclick="switchLanguage('en')">EN</button>
+                    <button class="lang-btn" id="langTa" onclick="switchLanguage('ta')">தமிழ்</button>
+                </div>
+                
                 <div class="islamic-pattern">☪ 🕌 ☪</div>
-                <h1>Jawhariyya Jumma Masjid Thalduwa – Avissawella</h1>
-                <h2>Mosque Renovation and Maintenance Project - Ramadan 2026</h2>
-                <p style="font-size: 0.95rem; opacity: 0.9; margin-top: 5px;">Continuous Charity (Sadaqah Jariyah)</p>
+                <h1 id="mosqueTitle">Jawhariyya Jumma Masjid Thalduwa – Avissawella</h1>
+                <h2 id="projectTitle">Mosque Renovation and Maintenance Project - Ramadan 2026</h2>
+                <p style="font-size: 0.95rem; opacity: 0.9; margin-top: 5px;" id="sadaqahJariyah">Continuous Charity (Sadaqah Jariyah)</p>
                 
                 <!-- Islamic Quote Section -->
                 <div class="quote-section" id="quoteSection">
@@ -69,10 +78,17 @@
                     </div>
                 </div>
                 
+                <!-- Share Button -->
+                <div class="share-dashboard-container">
+                    <button class="btn-share" id="shareDashboardBtn" onclick="openShareModal()">
+                        📤 <span id="shareButtonText">Share Progress</span>
+                    </button>
+                </div>
+                
                 <!-- Progress Bar -->
                 <div class="progress-container">
                     <div class="progress-header">
-                        <span class="progress-title">Collection Progress</span>
+                        <span class="progress-title" id="progressTitle">Collection Progress</span>
                         <span class="progress-percentage" id="progressPercentage">0%</span>
                     </div>
                     <div class="progress-bar-wrapper">
@@ -85,18 +101,18 @@
         <!-- Shares Section -->
         <section class="shares-section">
             <div class="container">
-                <h3>🎫 Sponsorship Shares</h3>
-                <p class="shares-subtitle">Each share represents Rs. 5,000 contribution. Click on a share to sponsor or view details.</p>
+                <h3 id="sharesTitle">🎫 Sponsorship Shares</h3>
+                <p class="shares-subtitle" id="sharesSubtitle">Each share represents Rs. 5,000 contribution. Click on a share to sponsor or view details.</p>
                 
                 <!-- Legend -->
                 <div class="shares-legend">
                     <div class="legend-item">
                         <div class="legend-box available"></div>
-                        <span>Available</span>
+                        <span id="legendAvailable">Available</span>
                     </div>
                     <div class="legend-item">
                         <div class="legend-box issued"></div>
-                        <span>Issued</span>
+                        <span id="legendIssued">Issued</span>
                     </div>
                 </div>
                 
@@ -110,7 +126,7 @@
         <!-- Project Information -->
         <section class="project-info">
             <div class="container">
-                <h3>📋 About This Project</h3>
+                <h3 id="projectTitle2">📋 About This Project</h3>
                 <p id="projectDescription"></p>
                 <ul class="objectives-list" id="objectivesList">
                     <!-- Objectives will be rendered by JavaScript -->
@@ -121,12 +137,12 @@
         <!-- Contact Section -->
         <section class="contact-section">
             <div class="contact-content">
-                <h3>💝 How to Donate</h3>
-                <p>Make a direct bank transfer or contact us via WhatsApp/Email to sponsor one or more shares.</p>
+                <h3 id="contactTitle">💝 How to Donate</h3>
+                <p id="contactSubtitle">Make a direct bank transfer or contact us via WhatsApp/Email to sponsor one or more shares.</p>
                 
                 <!-- Bank Details -->
                 <div class="bank-details">
-                    <h4>🏦 Bank Transfer Details</h4>
+                    <h4 id="bankTitle">🏦 Bank Transfer Details</h4>
                     <div class="bank-info" id="bankDetails">
                         <!-- Bank details will be rendered by JavaScript -->
                     </div>
@@ -160,15 +176,23 @@
             <!-- Modal content will be rendered by JavaScript -->
         </div>
     </div>
+    
+    <!-- Share Modal -->
+    <div class="modal-overlay" id="shareModalOverlay">
+        <div class="modal share-modal" id="shareModalContent">
+            <!-- Share modal content will be rendered by JavaScript -->
+        </div>
+    </div>
 
     <!-- Loading Overlay -->
     <div class="loading-overlay" id="loadingOverlay">
         <div class="loading-spinner"></div>
-        <p>Loading...</p>
+        <p id="loadingText">Loading...</p>
     </div>
 
     <!-- Scripts -->
     <script src="data.js"></script>
+    <script src="translations.js"></script>
     <script src="app.js"></script>
 </body>
 </html>
