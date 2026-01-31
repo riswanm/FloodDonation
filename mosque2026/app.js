@@ -7,6 +7,8 @@
 let sharesGrid;
 let modalOverlay;
 let loadingOverlay;
+let shareModalOverlay;
+let capturedImageUrl = null;
 
 // Initialize application when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -21,6 +23,7 @@ async function initializeApp() {
     sharesGrid = document.getElementById('sharesGrid');
     modalOverlay = document.getElementById('modalOverlay');
     loadingOverlay = document.getElementById('loadingOverlay');
+    shareModalOverlay = document.getElementById('shareModalOverlay');
     
     // Show loading
     showLoading();
@@ -77,6 +80,12 @@ function renderSectionHeadings() {
     document.getElementById('contactSubtitle').textContent = t('sections.donateSubtitle');
     document.getElementById('bankTitle').textContent = '🏦 ' + t('sections.bankTransferDetails');
     document.getElementById('loadingText').textContent = t('sections.loading');
+    
+    // Update share button text
+    const shareButtonText = document.getElementById('shareButtonText');
+    if (shareButtonText) {
+        shareButtonText.textContent = t('sections.shareProgress');
+    }
 }
 
 /**
@@ -507,13 +516,256 @@ function setupEventListeners() {
         }
     });
     
+    // Close share modal when clicking overlay
+    if (shareModalOverlay) {
+        shareModalOverlay.addEventListener('click', (e) => {
+            if (e.target === shareModalOverlay) {
+                closeShareModal();
+            }
+        });
+    }
+    
     // Close modal with Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeModal();
+            closeShareModal();
         }
     });
 }
 
-// Expose closeModal to global scope for onclick handlers
+// ===========================================
+// SHARE DASHBOARD FUNCTIONALITY
+// ===========================================
+
+/**
+ * Open share modal and capture dashboard
+ */
+async function openShareModal() {
+    const shareModal = document.getElementById('shareModalContent');
+    
+    // Show loading state
+    shareModal.innerHTML = `
+        <div class="share-loading">
+            <div class="share-spinner"></div>
+            <p>${t('sections.loading')}</p>
+        </div>
+    `;
+    shareModalOverlay.classList.add('active');
+    
+    // Capture the stats section
+    await captureDashboard();
+    
+    // Show share options
+    showShareOptions();
+}
+
+/**
+ * Capture dashboard as image
+ */
+async function captureDashboard() {
+    const statsSection = document.querySelector('.stats-section');
+    
+    if (!statsSection || typeof html2canvas === 'undefined') {
+        console.error('html2canvas not loaded or stats section not found');
+        return;
+    }
+    
+    try {
+        const canvas = await html2canvas(statsSection, {
+            backgroundColor: '#ffffff',
+            scale: 2, // Higher quality
+            logging: false,
+            useCORS: true
+        });
+        
+        // Convert to blob
+        canvas.toBlob((blob) => {
+            if (capturedImageUrl) {
+                URL.revokeObjectURL(capturedImageUrl);
+            }
+            capturedImageUrl = URL.createObjectURL(blob);
+        }, 'image/png');
+        
+        return canvas;
+    } catch (error) {
+        console.error('Failed to capture dashboard:', error);
+    }
+}
+
+/**
+ * Show share options modal
+ */
+function showShareOptions() {
+    const shareModal = document.getElementById('shareModalContent');
+    const stats = getStats();
+    const shareText = encodeURIComponent(
+        `${t('header.mosqueTitle')}\n\n` +
+        `${t('stats.sharesIssued')}: ${stats.issuedCount}/${CONFIG.totalShares}\n` +
+        `${t('stats.collectedAmount')}: ${formatCurrency(stats.collectedAmount)}\n` +
+        `${t('form.total')}: ${formatCurrency(CONFIG.totalAmount)}\n\n` +
+        `${t('success.jazakAllah')}! 🕌`
+    );
+    
+    shareModal.innerHTML = `
+        <h4>📤 ${currentLanguage === 'ta' ? 'முன்னேற்றத்தைப் பகிரவும்' : 'Share Progress'}</h4>
+        <p>${currentLanguage === 'ta' ? 'எங்கள் நிதி சேகரிப்பு முன்னேற்றத்தைப் பகிரவும்' : 'Share our fundraising progress with your community'}</p>
+        
+        <div class="share-options">
+            <button class="share-option-btn" onclick="downloadDashboard()">
+                <span class="icon">⬇️</span>
+                <span>${currentLanguage === 'ta' ? 'பதிவிறக்கவும்' : 'Download'}</span>
+            </button>
+            
+            <button class="share-option-btn" onclick="shareToWhatsApp('${shareText}')">
+                <span class="icon">📱</span>
+                <span>${currentLanguage === 'ta' ? 'வாட்ஸ்அப்' : 'WhatsApp'}</span>
+            </button>
+        </div>
+        
+        <div class="share-note">
+            ${currentLanguage === 'ta' ? 
+                '💡 பதிவிறக்கிய பிறகு, படத்தை வாட்ஸ்அப்பில் கைமுறையாக இணைக்கலாம்' : 
+                '💡 After downloading, you can manually attach the image to WhatsApp'}
+        </div>
+        
+        <button class="modal-close" onclick="closeShareModal()">${t('modal.close')}</button>
+    `;
+}
+
+/**
+ * Download dashboard as image
+ */
+async function downloadDashboard() {
+    if (!capturedImageUrl) {
+        await captureDashboard();
+    }
+    
+    if (capturedImageUrl) {
+        const link = document.createElement('a');
+        link.download = `mosque-fund-progress-${new Date().toISOString().split('T')[0]}.png`;
+        link.href = capturedImageUrl;
+        link.click();
+    }
+}
+
+/**
+ * Share to WhatsApp with text
+ */
+function shareToWhatsApp(text) {
+    const whatsappUrl = `https://wa.me/?text=${text}`;
+    window.open(whatsappUrl, '_blank');
+}
+
+/**
+ * Print dashboard
+ */
+async function printDashboard() {
+    const statsSection = document.querySelector('.stats-section');
+    
+    if (!statsSection) return;
+    
+    // Create print window
+    const printWindow = window.open('', '_blank');
+    const styles = `
+        <style>
+            body {
+                font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+                margin: 20px;
+                background: white;
+            }
+            .print-header {
+                text-align: center;
+                margin-bottom: 20px;
+                padding-bottom: 20px;
+                border-bottom: 3px solid #1a4d2e;
+            }
+            .print-header h1 {
+                color: #1a4d2e;
+                margin: 10px 0;
+            }
+            .print-header p {
+                color: #666;
+                margin: 5px 0;
+            }
+            img {
+                max-width: 100%;
+                box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+                border-radius: 10px;
+            }
+            .print-footer {
+                text-align: center;
+                margin-top: 30px;
+                padding-top: 20px;
+                border-top: 2px solid #e9ecef;
+                color: #666;
+                font-size: 0.9rem;
+            }
+            @media print {
+                body { margin: 0; }
+                .print-header, .print-footer { page-break-inside: avoid; }
+            }
+        </style>
+    `;
+    
+    try {
+        const canvas = await html2canvas(statsSection, {
+            backgroundColor: '#ffffff',
+            scale: 2,
+            logging: false
+        });
+        
+        const imageData = canvas.toDataURL('image/png');
+        
+        printWindow.document.write(`
+            <!DOCTYPE html>
+            <html>
+            <head>
+                <title>Mosque Fund Progress</title>
+                ${styles}
+            </head>
+            <body>
+                <div class="print-header">
+                    <h1>${t('header.mosqueTitle')}</h1>
+                    <p>${t('header.projectTitle')}</p>
+                    <p><strong>${t('header.sadaqahJariyah')}</strong></p>
+                </div>
+                <img src="${imageData}" alt="Fundraising Progress" />
+                <div class="print-footer">
+                    <p>Generated on ${new Date().toLocaleDateString('en-GB')}</p>
+                    <p>${t('success.jazakAllah')}!</p>
+                </div>
+            </body>
+            </html>
+        `);
+        
+        printWindow.document.close();
+        printWindow.focus();
+        
+        // Wait for image to load then print
+        setTimeout(() => {
+            printWindow.print();
+        }, 500);
+        
+    } catch (error) {
+        console.error('Failed to print dashboard:', error);
+        alert('Failed to generate print view. Please try downloading instead.');
+    }
+}
+
+/**
+ * Close share modal
+ */
+function closeShareModal() {
+    if (shareModalOverlay) {
+        shareModalOverlay.classList.remove('active');
+    }
+}
+
+// Expose functions to global scope for onclick handlers
 window.closeModal = closeModal;
+window.openShareModal = openShareModal;
+window.closeShareModal = closeShareModal;
+window.downloadDashboard = downloadDashboard;
+window.shareToWhatsApp = shareToWhatsApp;
+window.printDashboard = printDashboard;

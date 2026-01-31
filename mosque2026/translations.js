@@ -38,7 +38,8 @@ const TRANSLATIONS = {
             howToDonate: "How to Donate",
             donateSubtitle: "Make a direct bank transfer or contact us via WhatsApp/Email to sponsor one or more shares.",
             bankTransferDetails: "Bank Transfer Details",
-            loading: "Loading..."
+            loading: "Loading...",
+            shareProgress: "Share Progress"
         },
         
         // Project Info
@@ -143,7 +144,8 @@ const TRANSLATIONS = {
             howToDonate: "நன்கொடை செய்வது எப்படி",
             donateSubtitle: "நேரடி வங்கி பரிமாற்றம் செய்யவும் அல்லது ஒன்று அல்லது அதற்கு மேற்பட்ட பங்குகளை ஸ்பான்சர் செய்ய வாட்ஸ்அப்/மின்னஞ்சல் வழியாக எங்களை தொடர்பு கொள்ளவும்.",
             bankTransferDetails: "வங்கி பரிமாற்ற விவரங்கள்",
-            loading: "ஏற்றுகிறது..."
+            loading: "ஏற்றுகிறது...",
+            shareProgress: "முன்னேற்றத்தைப் பகிரவும்"
         },
         
         // Project Info
