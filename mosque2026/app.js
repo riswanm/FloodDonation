@@ -80,12 +80,6 @@ function renderSectionHeadings() {
     document.getElementById('contactSubtitle').textContent = t('sections.donateSubtitle');
     document.getElementById('bankTitle').textContent = '🏦 ' + t('sections.bankTransferDetails');
     document.getElementById('loadingText').textContent = t('sections.loading');
-    
-    // Update share button text
-    const shareButtonText = document.getElementById('shareButtonText');
-    if (shareButtonText) {
-        shareButtonText.textContent = t('sections.shareProgress');
-    }
 }
 
 /**
