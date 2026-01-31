@@ -659,6 +659,7 @@ body {
     max-width: 400px;
     width: 90%;
     text-align: center;
+    position: relative;
     transform: scale(0.8);
     transition: transform 0.3s ease;
 }
@@ -704,6 +705,33 @@ body {
 
 .modal-close:hover {
     background: var(--primary-dark);
+}
+
+/* Modal Close Icon (X button) */
+.modal-close-icon {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: transparent;
+    border: none;
+    font-size: 2rem;
+    line-height: 1;
+    color: var(--text-muted);
+    cursor: pointer;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+.modal-close-icon:hover {
+    background: var(--light-gray);
+    color: var(--primary-dark);
+    transform: rotate(90deg);
 }
 
 /* Responsive Design */

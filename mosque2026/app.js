@@ -273,6 +273,7 @@ function openShareModal(shareNumber, isIssued) {
     
     if (isIssued) {
         modal.innerHTML = `
+            <button class="modal-close-icon" onclick="closeModal()" title="${t('modal.close')}">×</button>
             <h4>${t('modal.shareIssued')} ✓</h4>
             <div class="modal-share-number">#${shareNumber}</div>
             <p>${t('modal.shareSponsored')}</p>
@@ -284,6 +285,7 @@ function openShareModal(shareNumber, isIssued) {
         // Show booking form for available shares
         const availableShares = CONFIG.totalShares - SHARES_ISSUED;
         modal.innerHTML = `
+            <button class="modal-close-icon" onclick="closeModal()" title="${t('modal.close')}">×</button>
             <h4>📝 ${t('modal.bookYourShares')}</h4>
             <div class="modal-share-number">${t('modal.startingFrom')} #${shareNumber}</div>
             <p class="modal-price">${formatCurrency(CONFIG.sharePrice)} ${t('modal.perShare')}</p>
@@ -602,6 +604,7 @@ function showShareOptions() {
     );
     
     shareModal.innerHTML = `
+        <button class="modal-close-icon" onclick="closeShareModal()" title="${currentLanguage === 'ta' ? 'மூடு' : 'Close'}">×</button>
         <h4>📤 ${currentLanguage === 'ta' ? 'முன்னேற்றத்தைப் பகிரவும்' : 'Share Progress'}</h4>
         <p>${currentLanguage === 'ta' ? 'எங்கள் நிதி சேகரிப்பு முன்னேற்றத்தைப் பகிரவும்' : 'Share our fundraising progress with your community'}</p>
         
