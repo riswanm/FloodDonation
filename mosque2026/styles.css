@@ -916,6 +916,14 @@ body {
     .donor-table-wrapper {
         max-height: 300px;
     }
+    
+    .btn-share-donor-icon {
+        top: 12px;
+        right: 50px;
+        width: 32px;
+        height: 32px;
+        font-size: 0.9rem;
+    }
 }
 
 /* Utility Classes */
@@ -1087,6 +1095,37 @@ body {
     font-weight: 600;
     color: var(--primary-dark);
     border-top: 2px solid var(--primary-green);
+}
+
+/* Donor Share Icon Button */
+.btn-share-donor-icon {
+    position: absolute;
+    top: 15px;
+    right: 55px;
+    width: 36px;
+    height: 36px;
+    background: linear-gradient(135deg, var(--primary-green), var(--primary-light));
+    color: var(--white);
+    border: none;
+    border-radius: 50%;
+    font-size: 1rem;
+    cursor: pointer;
+    box-shadow: 0 3px 10px var(--shadow);
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+}
+
+.btn-share-donor-icon:hover {
+    transform: translateY(-2px) scale(1.05);
+    box-shadow: 0 5px 15px var(--shadow);
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-green));
+}
+
+.btn-share-donor-icon:active {
+    transform: translateY(0) scale(0.95);
 }
 
 /* Booking Form Styles */

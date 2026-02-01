@@ -10,6 +10,7 @@ let loadingOverlay;
 let shareModalOverlay;
 let donorModalOverlay;
 let capturedImageUrl = null;
+let currentDonorData = null; // Store donor data for sharing
 
 // Initialize application when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -852,6 +853,9 @@ async function loadDonorDetails() {
 function renderDonorTable(donors) {
     const donorModal = document.getElementById('donorModalContent');
     
+    // Store donors for sharing
+    currentDonorData = donors;
+    
     if (!donors || donors.length === 0) {
         donorModal.innerHTML = `
             <button class="modal-close-icon" onclick="closeDonorModal()" title="${t('modal.close')}">×</button>
@@ -885,6 +889,7 @@ function renderDonorTable(donors) {
     
     donorModal.innerHTML = `
         <button class="modal-close-icon" onclick="closeDonorModal()" title="${t('modal.close')}">×</button>
+        <button class="btn-share-donor-icon" onclick="shareDonorDetails()" title="${t('donors.shareWhatsApp')}">📤</button>
         <h4>👥 ${t('donors.title')}</h4>
         <p class="donor-count">${t('donors.totalDonors')}: ${donors.length}</p>
         
@@ -935,6 +940,37 @@ function closeDonorModal() {
     }
 }
 
+/**
+ * Share donor details via WhatsApp
+ */
+function shareDonorDetails() {
+    if (!currentDonorData || currentDonorData.length === 0) {
+        return;
+    }
+    
+    // Build text table
+    const header = `*${t('header.mosqueTitle')}*\n*${t('donors.title')}*\n${'─'.repeat(30)}\n`;
+    
+    // Build donor list
+    const donorLines = currentDonorData.map((donor, index) => {
+        const shareRange = donor.fromShare === donor.toShare 
+            ? `#${donor.fromShare}` 
+            : `#${donor.fromShare}-${donor.toShare}`;
+        
+        return `${index + 1}. *${donor.name}*\n   ${t('donors.shares')}: ${donor.shares} | ${formatCurrency(donor.amount)}\n   ${t('donors.shareNumbers')}: ${shareRange}`;
+    }).join('\n\n');
+    
+    // Calculate totals
+    const totalShares = currentDonorData.reduce((sum, d) => sum + d.shares, 0);
+    const totalAmount = currentDonorData.reduce((sum, d) => sum + d.amount, 0);
+    
+    const footer = `\n${'─'.repeat(30)}\n*${t('donors.total')}:* ${totalShares} ${t('donors.shares')} | ${formatCurrency(totalAmount)}\n\n${t('success.jazakAllah')}! 🕌`;
+    
+    const shareText = encodeURIComponent(header + donorLines + footer);
+    const whatsappUrl = `https://wa.me/?text=${shareText}`;
+    window.open(whatsappUrl, '_blank');
+}
+
 // Expose functions to global scope for onclick handlers
 window.closeModal = closeModal;
 window.openDashboardShareModal = openDashboardShareModal;
@@ -944,3 +980,4 @@ window.shareToWhatsApp = shareToWhatsApp;
 window.printDashboard = printDashboard;
 window.openDonorModal = openDonorModal;
 window.closeDonorModal = closeDonorModal;
+window.shareDonorDetails = shareDonorDetails;

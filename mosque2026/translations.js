@@ -118,7 +118,8 @@ const TRANSLATIONS = {
             amount: "Amount",
             shareNumbers: "Share Numbers",
             total: "Total",
-            noData: "No donor data available yet."
+            noData: "No donor data available yet.",
+            shareWhatsApp: "Share via WhatsApp"
         }
     },
     
@@ -237,7 +238,8 @@ const TRANSLATIONS = {
             amount: "தொகை",
             shareNumbers: "பங்கு எண்கள்",
             total: "மொத்தம்",
-            noData: "நன்கொடையாளர் தரவு இன்னும் கிடைக்கவில்லை."
+            noData: "நன்கொடையாளர் தரவு இன்னும் கிடைக்கவில்லை.",
+            shareWhatsApp: "வாட்ஸ்அப்பில் பகிரவும்"
         }
     }
 };
