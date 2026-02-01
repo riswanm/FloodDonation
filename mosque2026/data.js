@@ -42,10 +42,10 @@ const CONFIG = {
     // Google Sheets Integration
     googleSheets: {
         // Replace with your deployed Google Apps Script URL
-        scriptUrl: 'https://script.google.com/macros/s/AKfycbxSBG5_spS4bHcWoGHVmS13_wfjCk4GR3byvuqd7YoaREOOJPKF63nJaAleNXnUKSQQ/exec', // Will be set after deploying the script
+        scriptUrl: 'https://script.google.com/macros/s/AKfycbyzvp7fc4gkmpxrIpUI5JcrgA7zQ7JV9XIwLeuT4I13JQxZQKw3UrrOo4vLdK5Bm0f1/exec',
         // Sheet names
-        bookingsSheet: 'Bookings',
-        configSheet: 'Config'
+        bookingsSheet: 'Bookings'
+        // Note: Issued shares are now automatically calculated from Bookings sheet - no Config sheet needed!
     }
 };
 

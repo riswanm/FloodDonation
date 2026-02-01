@@ -401,10 +401,23 @@ async function submitBooking(bookingData) {
             });
             
             console.log('Booking submitted to Google Sheets');
+            
+            // Update local share count immediately for instant UI feedback
+            SHARES_ISSUED += bookingData.numShares;
+            renderStats();
+            renderShares();
         }
         
         // Show success message with WhatsApp option
         showBookingSuccess(bookingData);
+        
+        // Reload actual count from server after a short delay
+        // This ensures we have the accurate count from Google Sheets
+        setTimeout(async () => {
+            await loadIssuedSharesFromSheet();
+            renderStats();
+            renderShares();
+        }, 3000);
         
     } catch (error) {
         console.error('Failed to submit booking:', error);
