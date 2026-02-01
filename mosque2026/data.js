@@ -16,7 +16,7 @@ const CONFIG = {
     mosquePhone: '036 222 2077',
     
     // Contact Information (from flood2025)
-    contactWhatsApp: '+94772960630',
+    contactWhatsApp: '+94777571876',
     contactEmail: 'mosque@example.com',
     contactPersons: [
         {
@@ -27,7 +27,7 @@ const CONFIG = {
         {
             name: "M.H.M. Fawaz",
             role: "Secretary",
-            phone: "+94 78 757 1876"
+            phone: "+94 77 757 1876"
         }
     ],
     
