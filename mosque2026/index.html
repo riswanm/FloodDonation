@@ -99,7 +99,12 @@
         <!-- Shares Section -->
         <section class="shares-section">
             <div class="container">
-                <h3 id="sharesTitle">🎫 Sponsorship Shares</h3>
+                <div class="shares-header">
+                    <h3 id="sharesTitle">🎫 Sponsorship Shares</h3>
+                    <button class="btn-donor-details" onclick="openDonorModal()" id="btnDonorDetails">
+                        👥 <span id="donorBtnText">Show Donors</span>
+                    </button>
+                </div>
                 <p class="shares-subtitle" id="sharesSubtitle">Each share represents Rs. 5,000 contribution. Click on a share to sponsor or view details.</p>
                 
                 <!-- Legend -->
@@ -179,6 +184,13 @@
     <div class="modal-overlay" id="shareModalOverlay">
         <div class="modal share-modal" id="shareModalContent">
             <!-- Share modal content will be rendered by JavaScript -->
+        </div>
+    </div>
+    
+    <!-- Donor Details Modal -->
+    <div class="modal-overlay" id="donorModalOverlay">
+        <div class="modal donor-modal" id="donorModalContent">
+            <!-- Donor details will be rendered by JavaScript -->
         </div>
     </div>
 

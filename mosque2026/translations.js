@@ -106,6 +106,21 @@ const TRANSLATIONS = {
             depositNote: "You can also deposit directly and share the payment slip via WhatsApp:",
             openWhatsApp: "Open WhatsApp",
             whatsappMessage: "I would like to sponsor {shares} share(s) for the Mosque Maintenance Fund."
+        },
+        
+        // Donor Details
+        donors: {
+            title: "Donor Details",
+            showDonors: "Show Donors",
+            totalDonors: "Total Donors",
+            donorLabel: "Donor",
+            name: "Name",
+            shares: "Shares",
+            amount: "Amount",
+            shareNumbers: "Share Numbers",
+            total: "Total",
+            noData: "No donor data available yet.",
+            shareWhatsApp: "Share via WhatsApp"
         }
     },
     
@@ -212,6 +227,21 @@ const TRANSLATIONS = {
             depositNote: "நீங்கள் நேரடியாக டெபாசிட் செய்து கட்டண ஸ்லிப்பை வாட்ஸ்அப் வழியாகவும் பகிரலாம்:",
             openWhatsApp: "வாட்ஸ்அப்பை திறக்கவும்",
             whatsappMessage: "நான் மசூதி பராமரிப்பு நிதிக்கு {shares} பங்கு(கள்) ஸ்பான்சர் செய்ய விரும்புகிறேன்."
+        },
+        
+        // Donor Details
+        donors: {
+            title: "நன்கொடையாளர் விவரங்கள்",
+            showDonors: "நன்கொடையாளர்களைக் காட்டு",
+            totalDonors: "மொத்த நன்கொடையாளர்கள்",
+            donorLabel: "நன்கொடையாளர்",
+            name: "பெயர்",
+            shares: "பங்குகள்",
+            amount: "தொகை",
+            shareNumbers: "பங்கு எண்கள்",
+            total: "மொத்தம்",
+            noData: "நன்கொடையாளர் தரவு இன்னும் கிடைக்கவில்லை.",
+            shareWhatsApp: "வாட்ஸ்அப்பில் பகிரவும்"
         }
     }
 };
