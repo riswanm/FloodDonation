@@ -8,6 +8,7 @@ let sharesGrid;
 let modalOverlay;
 let loadingOverlay;
 let shareModalOverlay;
+let donorModalOverlay;
 let capturedImageUrl = null;
 
 // Initialize application when DOM is ready
@@ -24,6 +25,7 @@ async function initializeApp() {
     modalOverlay = document.getElementById('modalOverlay');
     loadingOverlay = document.getElementById('loadingOverlay');
     shareModalOverlay = document.getElementById('shareModalOverlay');
+    donorModalOverlay = document.getElementById('donorModalOverlay');
     
     // Show loading
     showLoading();
@@ -80,6 +82,12 @@ function renderSectionHeadings() {
     document.getElementById('contactSubtitle').textContent = t('sections.donateSubtitle');
     document.getElementById('bankTitle').textContent = '🏦 ' + t('sections.bankTransferDetails');
     document.getElementById('loadingText').textContent = t('sections.loading');
+    
+    // Donor button text
+    const donorBtnText = document.getElementById('donorBtnText');
+    if (donorBtnText) {
+        donorBtnText.textContent = t('donors.showDonors');
+    }
 }
 
 /**
@@ -534,11 +542,21 @@ function setupEventListeners() {
         });
     }
     
+    // Close donor modal when clicking overlay
+    if (donorModalOverlay) {
+        donorModalOverlay.addEventListener('click', (e) => {
+            if (e.target === donorModalOverlay) {
+                closeDonorModal();
+            }
+        });
+    }
+    
     // Close modal with Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape') {
             closeModal();
             closeShareModal();
+            closeDonorModal();
         }
     });
 }
@@ -772,6 +790,151 @@ function closeShareModal() {
     }
 }
 
+// ===========================================
+// DONOR DETAILS FUNCTIONALITY
+// ===========================================
+
+/**
+ * Open donor details modal
+ */
+async function openDonorModal() {
+    const donorModal = document.getElementById('donorModalContent');
+    
+    // Show loading state
+    donorModal.innerHTML = `
+        <button class="modal-close-icon" onclick="closeDonorModal()" title="${t('modal.close')}">×</button>
+        <div class="share-loading">
+            <div class="share-spinner"></div>
+            <p>${t('sections.loading')}</p>
+        </div>
+    `;
+    donorModalOverlay.classList.add('active');
+    
+    // Load donor details
+    await loadDonorDetails();
+}
+
+/**
+ * Load donor details from Google Sheets
+ */
+async function loadDonorDetails() {
+    const donorModal = document.getElementById('donorModalContent');
+    
+    try {
+        if (!CONFIG.googleSheets.scriptUrl) {
+            throw new Error('Google Sheets not configured');
+        }
+        
+        const response = await fetch(`${CONFIG.googleSheets.scriptUrl}?action=getAllDonors`);
+        const data = await response.json();
+        
+        if (data.success && data.donors) {
+            renderDonorTable(data.donors);
+        } else {
+            throw new Error(data.error || 'Failed to load donors');
+        }
+    } catch (error) {
+        console.error('Failed to load donor details:', error);
+        
+        // Show error message
+        donorModal.innerHTML = `
+            <button class="modal-close-icon" onclick="closeDonorModal()" title="${t('modal.close')}">×</button>
+            <h4>👥 ${t('donors.title')}</h4>
+            <p style="color: var(--text-muted); margin: 20px 0;">${t('donors.noData')}</p>
+            <button class="modal-close" onclick="closeDonorModal()">${t('modal.close')}</button>
+        `;
+    }
+}
+
+/**
+ * Render donor table
+ */
+function renderDonorTable(donors) {
+    const donorModal = document.getElementById('donorModalContent');
+    
+    if (!donors || donors.length === 0) {
+        donorModal.innerHTML = `
+            <button class="modal-close-icon" onclick="closeDonorModal()" title="${t('modal.close')}">×</button>
+            <h4>👥 ${t('donors.title')}</h4>
+            <p style="color: var(--text-muted); margin: 20px 0;">${t('donors.noData')}</p>
+            <button class="modal-close" onclick="closeDonorModal()">${t('modal.close')}</button>
+        `;
+        return;
+    }
+    
+    // Build table rows
+    const tableRows = donors.map((donor, index) => {
+        const shareRange = donor.fromShare === donor.toShare 
+            ? `#${donor.fromShare}` 
+            : `#${donor.fromShare} - #${donor.toShare}`;
+        
+        return `
+            <tr>
+                <td>${index + 1}</td>
+                <td>${escapeHtml(donor.name)}</td>
+                <td>${donor.shares}</td>
+                <td>${formatCurrency(donor.amount)}</td>
+                <td>${shareRange}</td>
+            </tr>
+        `;
+    }).join('');
+    
+    // Calculate totals
+    const totalShares = donors.reduce((sum, d) => sum + d.shares, 0);
+    const totalAmount = donors.reduce((sum, d) => sum + d.amount, 0);
+    
+    donorModal.innerHTML = `
+        <button class="modal-close-icon" onclick="closeDonorModal()" title="${t('modal.close')}">×</button>
+        <h4>👥 ${t('donors.title')}</h4>
+        <p class="donor-count">${t('donors.totalDonors')}: ${donors.length}</p>
+        
+        <div class="donor-table-wrapper">
+            <table class="donor-table">
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>${t('donors.name')}</th>
+                        <th>${t('donors.shares')}</th>
+                        <th>${t('donors.amount')}</th>
+                        <th>${t('donors.shareNumbers')}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${tableRows}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <td colspan="2"><strong>${t('donors.total')}</strong></td>
+                        <td><strong>${totalShares}</strong></td>
+                        <td><strong>${formatCurrency(totalAmount)}</strong></td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+        
+        <button class="modal-close" onclick="closeDonorModal()">${t('modal.close')}</button>
+    `;
+}
+
+/**
+ * Escape HTML to prevent XSS
+ */
+function escapeHtml(text) {
+    const div = document.createElement('div');
+    div.textContent = text;
+    return div.innerHTML;
+}
+
+/**
+ * Close donor modal
+ */
+function closeDonorModal() {
+    if (donorModalOverlay) {
+        donorModalOverlay.classList.remove('active');
+    }
+}
+
 // Expose functions to global scope for onclick handlers
 window.closeModal = closeModal;
 window.openDashboardShareModal = openDashboardShareModal;
@@ -779,3 +942,5 @@ window.closeShareModal = closeShareModal;
 window.downloadDashboard = downloadDashboard;
 window.shareToWhatsApp = shareToWhatsApp;
 window.printDashboard = printDashboard;
+window.openDonorModal = openDonorModal;
+window.closeDonorModal = closeDonorModal;

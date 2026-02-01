@@ -42,7 +42,7 @@ const CONFIG = {
     // Google Sheets Integration
     googleSheets: {
         // Replace with your deployed Google Apps Script URL
-        scriptUrl: 'https://script.google.com/macros/s/AKfycbyzvp7fc4gkmpxrIpUI5JcrgA7zQ7JV9XIwLeuT4I13JQxZQKw3UrrOo4vLdK5Bm0f1/exec',
+        scriptUrl: 'https://script.google.com/macros/s/AKfycbxUKADn_Fvm-4KBmGadmKmohguUr-MG2g3-yigKvCCy19hdFdczKFZ_v1ux0-T1I-Ew/exec',
         // Sheet names
         bookingsSheet: 'Bookings'
         // Note: Issued shares are now automatically calculated from Bookings sheet - no Config sheet needed!

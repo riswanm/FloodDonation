@@ -45,6 +45,10 @@ function doGet(e) {
     return getIssuedShares();
   }
   
+  if (action === 'getAllDonors') {
+    return getAllDonors();
+  }
+  
   return ContentService.createTextOutput(JSON.stringify({
     success: false,
     error: 'Unknown action'
@@ -157,6 +161,65 @@ function addBooking(data) {
   return ContentService.createTextOutput(JSON.stringify({
     success: true,
     message: 'Booking added successfully'
+  })).setMimeType(ContentService.MimeType.JSON);
+}
+
+/**
+ * Get all donor details from Bookings sheet
+ * Returns: name, shares, amount, share numbers (from-to)
+ */
+function getAllDonors() {
+  const ss = SpreadsheetApp.getActiveSpreadsheet();
+  const bookingsSheet = ss.getSheetByName(BOOKINGS_SHEET);
+  
+  if (!bookingsSheet) {
+    return ContentService.createTextOutput(JSON.stringify({
+      success: false,
+      error: 'Bookings sheet not found'
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  const lastRow = bookingsSheet.getLastRow();
+  
+  // If only header row or empty, return empty array
+  if (lastRow <= 1) {
+    return ContentService.createTextOutput(JSON.stringify({
+      success: true,
+      donors: []
+    })).setMimeType(ContentService.MimeType.JSON);
+  }
+  
+  // Get all data (skip header row)
+  // Columns: A=Timestamp, B=Name, C=Phone, D=Shares, E=Total Amount, F=Starting Share, G=Status
+  const dataRange = bookingsSheet.getRange(2, 1, lastRow - 1, 7);
+  const data = dataRange.getValues();
+  
+  const donors = [];
+  let runningShareTotal = 0;
+  
+  for (let i = 0; i < data.length; i++) {
+    const name = data[i][1]; // Column B - Name
+    const shares = parseInt(data[i][3]) || 0; // Column D - Shares
+    const amount = parseFloat(data[i][4]) || 0; // Column E - Total Amount
+    
+    if (name && shares > 0) {
+      const fromShare = runningShareTotal + 1;
+      const toShare = runningShareTotal + shares;
+      runningShareTotal = toShare;
+      
+      donors.push({
+        name: name,
+        shares: shares,
+        amount: amount,
+        fromShare: fromShare,
+        toShare: toShare
+      });
+    }
+  }
+  
+  return ContentService.createTextOutput(JSON.stringify({
+    success: true,
+    donors: donors
   })).setMimeType(ContentService.MimeType.JSON);
 }
 
